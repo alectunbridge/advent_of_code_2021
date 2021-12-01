@@ -1,4 +1,4 @@
-package advent_of_code_2021;
+package adventofcode2021;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
