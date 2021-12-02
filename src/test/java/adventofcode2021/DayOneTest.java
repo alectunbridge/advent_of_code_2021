@@ -29,4 +29,6 @@ class DayOneTest {
         assertThat(classUnderTest.findNumberIncreasedWindow(input)).isEqualTo(1805);
     }
 
+
+
 }
