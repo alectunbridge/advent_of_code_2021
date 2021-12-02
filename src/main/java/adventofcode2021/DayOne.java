@@ -5,34 +5,27 @@ package adventofcode2021;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class DayOne {
 
     public int findNumberIncreased(List<String> input) {
-
-        int previousValue = Integer.MAX_VALUE;
-
-        int counter = 0;
-        for (String line : input) {
-            int currentValue = Integer.parseInt(line);
-            if (currentValue > previousValue) {
-                counter++;
-            }
-            previousValue = currentValue;
-        }
-        return counter;
+        List<Integer> ints = convertStringsToIntegers(input);
+        return (int) IntStream
+            .range(1, ints.size())
+            .filter(i -> ints.get(i) > ints.get(i - 1))
+            .count();
     }
 
     public int findNumberIncreasedWindow(List<String> input) {
-        List<Integer> ints = input.stream().map(Integer::parseInt).collect(Collectors.toList());
-        int counter = 0;
-        for (int i = 3; i < ints.size(); i++) {
-            int previousWindow = ints.get(i - 3) + ints.get(i - 2) + ints.get(i - 1);
-            int currentWindow = ints.get(i - 2) + ints.get(i - 1) + ints.get(i);
-            if (previousWindow < currentWindow) {
-                counter++;
-            }
-        }
-        return counter;
+        List<Integer> ints = convertStringsToIntegers(input);
+        return (int) IntStream
+            .range(3, ints.size())
+            .filter(i -> ints.get(i - 3) < ints.get(i))
+            .count();
+    }
+
+    private List<Integer> convertStringsToIntegers(List<String> input) {
+        return input.stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 }
