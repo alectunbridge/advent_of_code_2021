@@ -21,7 +21,7 @@ public class DayOne {
         List<Integer> ints = convertStringsToIntegers(input);
         return (int) IntStream
             .range(3, ints.size())
-            .filter(i -> ints.get(i - 3) < ints.get(i))
+            .filter(i -> ints.get(i) > ints.get(i - 3))
             .count();
     }
 
