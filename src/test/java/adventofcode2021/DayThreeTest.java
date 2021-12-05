@@ -29,20 +29,19 @@ class DayThreeTest {
 
 	@Test
 	void partOneSolution() throws IOException, URISyntaxException {
-		assertThat(dayThree.powerConsumption(Utils.readInputLinesFromFile("day_three.txt"))).isEqualTo(3429254);
+		assertThat(dayThree.powerConsumption(Utils.readInputLinesFromFile("day_three.txt"))).isEqualTo(3901196);
 	}
 
 	@Test
 	void partTwoExample() {
 		assertThat(dayThree.lifeSupportRatingMostCommon(testInput, 0)).isEqualTo(23);
 		assertThat(dayThree.lifeSupportRatingLeastCommon(testInput, 0)).isEqualTo(10);
-		assertThat(dayThree.lifeSupportRatingLeastCommon(testInput, 0)* dayThree.lifeSupportRatingLeastCommon(testInput,0)).isEqualTo(230);
+		assertThat(dayThree.lifeSupportRatingMostCommon(testInput, 0) * dayThree.lifeSupportRatingLeastCommon(testInput,0)).isEqualTo(230);
 	}
 
 	@Test
 	void partTwoSolution() throws IOException, URISyntaxException {
-		//too high
 		assertThat(dayThree.lifeSupportRatingMostCommon(Utils.readInputLinesFromFile("day_three.txt"),0)
-		* dayThree.lifeSupportRatingLeastCommon(Utils.readInputLinesFromFile("day_three.txt"),0)).isEqualTo(5410338);
+		* dayThree.lifeSupportRatingLeastCommon(Utils.readInputLinesFromFile("day_three.txt"),0)).isEqualTo(4412188);
 	}
 }
