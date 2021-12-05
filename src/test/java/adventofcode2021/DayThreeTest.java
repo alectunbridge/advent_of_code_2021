@@ -10,9 +10,9 @@ import static org.assertj.core.api.Assertions.*;
 
 class DayThreeTest {
 
-	DayThree dayThree = new DayThree();
+	private DayThree dayThree = new DayThree();
 
-	List<String> inputs = List.of(
+	private static final List<String> testInput = List.of(
 			"00100",
 			"11110",
 			"10110",
@@ -28,7 +28,21 @@ class DayThreeTest {
 	);
 
 	@Test
-	void Test1() throws IOException, URISyntaxException {
-		assertThat(dayThree.runDiagnostic(Utils.readInputLinesFromFile("day_three.txt"))).isEqualTo(3429254);
+	void partOneSolution() throws IOException, URISyntaxException {
+		assertThat(dayThree.powerConsumption(Utils.readInputLinesFromFile("day_three.txt"))).isEqualTo(3429254);
+	}
+
+	@Test
+	void partTwoExample() {
+		assertThat(dayThree.lifeSupportRatingMostCommon(testInput, 0)).isEqualTo(23);
+		assertThat(dayThree.lifeSupportRatingLeastCommon(testInput, 0)).isEqualTo(10);
+		assertThat(dayThree.lifeSupportRatingLeastCommon(testInput, 0)* dayThree.lifeSupportRatingLeastCommon(testInput,0)).isEqualTo(230);
+	}
+
+	@Test
+	void partTwoSolution() throws IOException, URISyntaxException {
+		//too high
+		assertThat(dayThree.lifeSupportRatingMostCommon(Utils.readInputLinesFromFile("day_three.txt"),0)
+		* dayThree.lifeSupportRatingLeastCommon(Utils.readInputLinesFromFile("day_three.txt"),0)).isEqualTo(5410338);
 	}
 }
