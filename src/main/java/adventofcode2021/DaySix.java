@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class DaySix {
 
-	public int solve(String testInputs, int numOfDays) {
+	public int solvePart1(String testInputs, int numOfDays) {
 
 		List<Integer> ages;
 
@@ -31,16 +31,6 @@ public class DaySix {
 			ages.addAll(newFish);
 		}
 
-		// Output testing
-//		for(int v: ages.get(0)){
-//			System.out.println(v);
-//		}
-
-
 		return ages.size();
 	}
 }
-
-
-// 0 become 6
-// when this happens we add a new 8 to the end.

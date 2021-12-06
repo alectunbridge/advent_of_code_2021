@@ -15,8 +15,12 @@ class DaySixTest {
 
 
 	@Test
-	void Test1DaySix() throws IOException, URISyntaxException {
+	void solvePart1Example() {
+		assertThat(daySix.solvePart1(testInput, 80)).isEqualTo(5934);
+	}
 
-		assertThat(daySix.solve(Utils.readInputLinesFromFile("day_six.txt").get(0), 256)).isEqualTo(5934);
+	@Test
+	void solvePart1() throws IOException, URISyntaxException {
+		assertThat(daySix.solvePart1(Utils.readInputLinesFromFile("day_six.txt").get(0), 80)).isEqualTo(350917);
 	}
 }
