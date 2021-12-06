@@ -16,11 +16,18 @@ class DaySixTest {
 
 	@Test
 	void solvePart1Example() {
-		assertThat(daySix.solvePart1(testInput, 80)).isEqualTo(5934);
+		assertThat(daySix.solvePart1(testInput, 18)).isEqualTo(26);
 	}
 
 	@Test
 	void solvePart1() throws IOException, URISyntaxException {
 		assertThat(daySix.solvePart1(Utils.readInputLinesFromFile("day_six.txt").get(0), 80)).isEqualTo(350917);
 	}
+
+	@Test
+	void solvePart2() throws IOException, URISyntaxException {
+		assertThat(daySix.solvePart1(Utils.readInputLinesFromFile("day_six.txt").get(0), 256)).isEqualTo(1592918715629L);
+	}
+
+
 }

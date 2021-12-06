@@ -1,36 +1,31 @@
 package adventofcode2021;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.base.Functions;
+
+import javax.print.attribute.standard.PagesPerMinute;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DaySix {
 
-	public int solvePart1(String testInputs, int numOfDays) {
+	public long solvePart1(String testInputs, int numOfDays) {
 
-		List<Integer> ages;
+		long[] ageCounts = new long[9];
+		Arrays.fill(ageCounts,0);
+		Arrays.stream(testInputs.split(",")).map(Integer::parseInt).forEach(age -> ageCounts[age] += 1);
 
-		ages = Arrays.stream(testInputs.split(",")).map(Integer::parseInt).collect(Collectors.toList());
-
-		for (int j = 0; j < numOfDays; j++) {
-
-			List<Integer> newFish = new ArrayList<>();
-			for (int i = 0; i < ages.size(); i++) {
-				Integer fish = ages.get(i);
-
-
-				if (fish != 0) {
-					ages.set(i, ages.get(i) - 1);
-				} else {
-					ages.set(i, 6);
-					newFish.add(8);
-				}
-
-			}
-			ages.addAll(newFish);
+		List<Long> agesList = new ArrayList<>();
+		for (int i = 0; i < ageCounts.length; i++) {
+			long age = ageCounts[i];
+			agesList.add(age);
 		}
 
-		return ages.size();
+		for (int j = 0; j < numOfDays; j++) {
+			long zeroAgeFish = agesList.remove(0);
+			agesList.set(6,agesList.get(6) + zeroAgeFish);
+			agesList.add(zeroAgeFish);
+		}
+
+		return agesList.stream().mapToLong(Long::valueOf).sum();
 	}
 }
