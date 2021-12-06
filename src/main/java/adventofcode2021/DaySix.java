@@ -1,24 +1,13 @@
 package adventofcode2021;
 
-import com.google.common.base.Functions;
-
-import javax.print.attribute.standard.PagesPerMinute;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DaySix {
 
-	public long solvePart1(String testInputs, int numOfDays) {
+	public long solve(String testInputs, int numOfDays) {
 
-		long[] ageCounts = new long[9];
-		Arrays.fill(ageCounts,0);
-		Arrays.stream(testInputs.split(",")).map(Integer::parseInt).forEach(age -> ageCounts[age] += 1);
-
-		List<Long> agesList = new ArrayList<>();
-		for (int i = 0; i < ageCounts.length; i++) {
-			long age = ageCounts[i];
-			agesList.add(age);
-		}
+		List<Long> agesList = new ArrayList<>(Collections.nCopies(9, 0L));
+		Arrays.stream(testInputs.split(",")).map(Integer::parseInt).forEach(age -> agesList.set(age,agesList.get(age)+1));
 
 		for (int j = 0; j < numOfDays; j++) {
 			long zeroAgeFish = agesList.remove(0);
