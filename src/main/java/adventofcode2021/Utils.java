@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Utils {
-    public static List<String> readInputLinesFromFile(String filename) throws IOException, URISyntaxException {
-        return Files.lines(Paths.get(ClassLoader.getSystemResource(filename).toURI())).collect(Collectors.toList());
+    public static List<String> readInputLinesFromFile(String filename) {
+        try {
+            return Files.lines(Paths.get(ClassLoader.getSystemResource(filename).toURI())).collect(Collectors.toList());
+        } catch (IOException | URISyntaxException e){
+            throw new RuntimeException(e);
+        }
     }
 }
