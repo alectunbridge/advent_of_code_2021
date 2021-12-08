@@ -30,7 +30,11 @@ public class DaySeven {
             for(int startingPosition:horizontalPositions){
                 int differenceInPositions = Math.abs(position - startingPosition);
                 //forumla for summing series https://en.wikipedia.org/wiki/Arithmetic_progression
-                fuelCost += (differenceInPositions*(differenceInPositions+1))/2;
+                int costForThisMove = 0;
+                for (int i = 0; i <= differenceInPositions; i++) {
+                    costForThisMove += i;
+                }
+                fuelCost += costForThisMove;
             }
             if(fuelCost < lowestFuelCost){
                 lowestFuelCost = fuelCost;
