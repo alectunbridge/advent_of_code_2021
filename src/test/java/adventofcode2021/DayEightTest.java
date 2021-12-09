@@ -44,6 +44,6 @@ class DayEightTest {
 
     @Test
     void partTwoSolution() {
-        assertThat(dayEight.solvePart2(Utils.readInputLinesFromFile("day_eight.txt"))).isEqualTo(0);
+        assertThat(dayEight.solvePart2(Utils.readInputLinesFromFile("day_eight.txt"))).isEqualTo(1024649);
     }
 }
