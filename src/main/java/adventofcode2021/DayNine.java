@@ -25,22 +25,22 @@ public class DayNine {
             for (int column = 0; column < grid[row].length; column++) {
                 int currentHeight = grid[row][column];
                 if (row != 0) {
-                    if (grid[row - 1][column] < currentHeight) {
+                    if (grid[row - 1][column] <= currentHeight) {
                         continue;
                     }
                 }
                 if (column != 0) {
-                    if (grid[row][column - 1] < currentHeight) {
+                    if (grid[row][column - 1] <= currentHeight) {
                         continue;
                     }
                 }
                 if (column != grid[row].length-1) {
-                    if (grid[row][column+1] < currentHeight) {
+                    if (grid[row][column+1] <= currentHeight) {
                         continue;
                     }
                 }
                 if (row != grid.length-1) {
-                    if (grid[row+1][column] < currentHeight) {
+                    if (grid[row+1][column] <= currentHeight) {
                         continue;
                     }
                 }
