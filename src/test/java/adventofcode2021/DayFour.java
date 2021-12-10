@@ -2,6 +2,7 @@ package adventofcode2021;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,23 @@ public class DayFour {
             for (Board board:boards) {
                 if(board.mark(number)) {
                     return board.sumUnMarkedNumbers() * number;
+                }
+            }
+
+        }
+        return 0;
+    }
+
+    public int solvePart2() {
+        for (int number:numbers) {
+            for (Iterator<Board> iterator = boards.iterator(); iterator.hasNext(); ) {
+                Board board = iterator.next();
+                if (board.mark(number)) {
+                    if (boards.size() == 1) {
+                        return board.sumUnMarkedNumbers() * number;
+                    } else {
+                        iterator.remove();
+                    }
                 }
             }
 
