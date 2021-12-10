@@ -45,6 +45,6 @@ public class DayNineTest {
     @Test
     void solvePart2() {
         assertThat(dayNine.solve2(Utils.readInputLinesFromFile("day_nine.txt"))
-                .stream().mapToInt(i->i).reduce(1,(a, b)->a*b)).isEqualTo(0);
+                .stream().mapToInt(i->i).reduce(1,(a, b)->a*b)).isEqualTo(1263735);
     }
 }
