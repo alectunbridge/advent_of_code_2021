@@ -87,7 +87,7 @@ public class DayTen {
             }
             System.out.println(missingBrackets);
 
-            result.add(calculateScore(missingBrackets));
+            result.add(scoreMissingBrackets());
             completionStack.clear();
             missingBrackets.clear();
         }
@@ -95,7 +95,7 @@ public class DayTen {
         return result.get((int)Math.ceil(result.size()/2.0)-1);
     }
 
-    private long calculateScore(ArrayList<Character> missingBrackets) {
+    private long scoreMissingBrackets() {
         long result = 0;
         for (Character missingBracket : missingBrackets) {
             result = result * 5 + POINTS_LOOKUP2.get(missingBracket);
