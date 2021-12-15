@@ -1,33 +1,34 @@
 package adventofcode2021;
 
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class DayFourteenAledJoe {
 	static long counter = 0;
-	private Map<String, String> cache = new HashMap<>();
+	private TreeMap<String, String> instructions;
 
 	public int Solve(List<String> input) {
 
 		String initialPolymer = input.get(0);
 
 
-		Map<String, String> instructions = new HashMap();
+		instructions = new TreeMap<>(Comparator.comparingInt(String::length).reversed().thenComparing(String::compareTo));
+//		instructions = new TreeMap<>();
 
 		for (int i = 2; i < input.size(); i++) {
 			String[] line = input.get(i).split(" -> ");
-			instructions.put(line[0], line[1]);
+            String key = line[0];
+            String value = line[0].charAt(0) + line[1] + line[0].charAt(1);
+            instructions.put(key, value);
 
 		}
 
 
 		for (int i = 0; i < 40; i++) {
-			initialPolymer = enhancePolymer(initialPolymer, instructions);
+			initialPolymer = enhancePolymer(initialPolymer);
+			System.out.println(initialPolymer);
 		}
 
 		String[] values = initialPolymer.split("");
@@ -37,33 +38,36 @@ public class DayFourteenAledJoe {
 		List<Long> list = answers.values().stream().sorted().collect(Collectors.toList());
 
 		return (int) (list.get(list.size()-1) - list.get(0));
-
-//		System.out.print(initialPolymer);
 	}
 
 
-	private String enhancePolymer(String initialPolymer, Map<String, String> instructions) {
-		String polymerToReturn = initialPolymer;
-		for (int i = 0; i < polymerToReturn.length()-1; i++) {
-			System.out.println(counter);
+	private String enhancePolymer(String polymer) {
+		String enhancedPolymer = polymer;
+		for (int i = 0; i < enhancedPolymer.length()-1;) {
+//			System.out.println(counter);
 
-			String firstPartDoNotAlter = polymerToReturn.substring(0, i);
-			String keyWindow = polymerToReturn.substring(i, i + 2);
-			String secondPartDoNotAlter = polymerToReturn.substring(i + 2);
+            Map.Entry<String,String> value = replacePolymer(enhancedPolymer,i);
+			if (value!=null) {
+				enhancedPolymer = enhancedPolymer.substring(0, i) + value.getValue() + enhancedPolymer.substring(i + value.getKey().length());
+                i += value.getValue().length()-1;
+            } else {
+                i++;
+            }
 
-			String value = instructions.get(keyWindow);
-
-			String newPolymer;
-
-			if (value != null) {
-				newPolymer = keyWindow.charAt(0) + value + keyWindow.charAt(1);
-				polymerToReturn = firstPartDoNotAlter + newPolymer + secondPartDoNotAlter;
-				i++;
-			}
 			counter++;
 		}
-		cache.put(initialPolymer,polymerToReturn);
-		return polymerToReturn;
+		instructions.put(polymer,enhancedPolymer);
+		return enhancedPolymer;
+	}
+
+	private Map.Entry<String,String> replacePolymer(String polymer,int index) {
+        Set<Map.Entry<String, String>> entries = instructions.entrySet();
+        for (Map.Entry<String, String> entry : entries) {
+            if(polymer.startsWith(entry.getKey(),index)){
+                return entry;
+            }
+        }
+		return null;
 	}
 }
 
