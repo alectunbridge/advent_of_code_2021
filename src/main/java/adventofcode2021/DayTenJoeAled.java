@@ -2,7 +2,7 @@ package adventofcode2021;
 
 import java.util.*;
 
-public class DayTen {
+public class DayTenJoeAled {
     private static final Map<Character, Integer> POINTS_LOOKUP = new HashMap<>();
     private static final Map<Character, Integer> POINTS_LOOKUP2 = new HashMap<>();
 
@@ -23,7 +23,7 @@ public class DayTen {
     private Deque<Object> completionStack = new ArrayDeque<>();
     private ArrayList<Character> missingBrackets = new ArrayList<>();
 
-    public DayTen(List<String> input) {
+    public DayTenJoeAled(List<String> input) {
         this.input = input;
     }
 

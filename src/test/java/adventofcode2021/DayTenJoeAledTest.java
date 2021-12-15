@@ -8,10 +8,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DayTenTest {
+public class DayTenJoeAledTest {
     @Test
     void part1Example() {
-        DayTen dayTen = new DayTen(new ArrayList<>(List.of(
+        DayTenJoeAled dayTenJoeAled = new DayTenJoeAled(new ArrayList<>(List.of(
                 "[({(<(())[]>[[{[]{<()<>>",
                 "[(()[<>])]({[<{<<[]>>(",
                 "{([(<{}[<>[]}>{[]{[(<()>",
@@ -23,18 +23,18 @@ public class DayTenTest {
                 "<{([([[(<>()){}]>(<<{{",
                 "<{([{{}}[<[[[<>{}]]]>[]]")));
 
-        assertThat(dayTen.solvePart1()).isEqualTo(26397);
+        assertThat(dayTenJoeAled.solvePart1()).isEqualTo(26397);
     }
 
     @Test
     void solvePart1() {
-        DayTen dayTen = new DayTen(Utils.readInputLinesFromFile("day_ten.txt"));
-        assertThat(dayTen.solvePart1()).isEqualTo(168417);
+        DayTenJoeAled dayTenJoeAled = new DayTenJoeAled(Utils.readInputLinesFromFile("day_ten.txt"));
+        assertThat(dayTenJoeAled.solvePart1()).isEqualTo(168417);
     }
 
     @Test
     void part2Example() {
-        DayTen dayTen = new DayTen(new ArrayList<>(Arrays.asList(
+        DayTenJoeAled dayTenJoeAled = new DayTenJoeAled(new ArrayList<>(Arrays.asList(
                 "[({(<(())[]>[[{[]{<()<>>",
                 "[(()[<>])]({[<{<<[]>>(",
                 "{([(<{}[<>[]}>{[]{[(<()>",
@@ -46,12 +46,12 @@ public class DayTenTest {
                 "<{([([[(<>()){}]>(<<{{",
                 "<{([{{}}[<[[[<>{}]]]>[]]")));
 
-        assertThat(dayTen.solvePart2()).isEqualTo(288957);
+        assertThat(dayTenJoeAled.solvePart2()).isEqualTo(288957);
     }
 
     @Test
     void solutionPart2() {
-        DayTen dayTen = new DayTen(Utils.readInputLinesFromFile("day_ten.txt"));
-        assertThat(dayTen.solvePart2()).isEqualTo(2802519786L);
+        DayTenJoeAled dayTenJoeAled = new DayTenJoeAled(Utils.readInputLinesFromFile("day_ten.txt"));
+        assertThat(dayTenJoeAled.solvePart2()).isEqualTo(2802519786L);
     }
 }
