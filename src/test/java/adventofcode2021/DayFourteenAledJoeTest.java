@@ -10,6 +10,6 @@ class DayFourteenAledJoeTest {
 
 	@Test
 	void Test() {
-		assertThat(dayFourteenAledJoe.Solve(Utils.readInputLinesFromFile("day_fourteen.txt"))).isEqualTo(1588);
+		assertThat(dayFourteenAledJoe.solve(Utils.readInputLinesFromFile("day_fourteen.txt"))).isEqualTo(3776553567525L);
 	}
 }
