@@ -1,5 +1,6 @@
 package adventofcode2021;
 
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class DayFourteenAledJoe {
+	static long counter = 0;
+	private Map<String, String> cache = new HashMap<>();
 
 	public int Solve(List<String> input) {
 
@@ -40,11 +43,13 @@ public class DayFourteenAledJoe {
 
 
 	private String enhancePolymer(String initialPolymer, Map<String, String> instructions) {
-		for (int i = 0; i < initialPolymer.length()-1; i++) {
+		String polymerToReturn = initialPolymer;
+		for (int i = 0; i < polymerToReturn.length()-1; i++) {
+			System.out.println(counter);
 
-			String firstPartDoNotAlter = initialPolymer.substring(0, i);
-			String keyWindow = initialPolymer.substring(i, i + 2);
-			String secondPartDoNotAlter = initialPolymer.substring(i + 2);
+			String firstPartDoNotAlter = polymerToReturn.substring(0, i);
+			String keyWindow = polymerToReturn.substring(i, i + 2);
+			String secondPartDoNotAlter = polymerToReturn.substring(i + 2);
 
 			String value = instructions.get(keyWindow);
 
@@ -52,11 +57,13 @@ public class DayFourteenAledJoe {
 
 			if (value != null) {
 				newPolymer = keyWindow.charAt(0) + value + keyWindow.charAt(1);
-				initialPolymer = firstPartDoNotAlter + newPolymer + secondPartDoNotAlter;
+				polymerToReturn = firstPartDoNotAlter + newPolymer + secondPartDoNotAlter;
 				i++;
 			}
+			counter++;
 		}
-		return initialPolymer;
+		cache.put(initialPolymer,polymerToReturn);
+		return polymerToReturn;
 	}
 }
 
