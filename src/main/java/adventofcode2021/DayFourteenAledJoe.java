@@ -67,7 +67,6 @@ public class DayFourteenAledJoe {
             instructions = newInstructionMap;
         }
         List<Long> letterCountsAsList = letterCount.values().stream().sorted().collect(Collectors.toList());
-        Collections.sort(letterCountsAsList);
         return letterCountsAsList.get(letterCountsAsList.size() - 1) - letterCountsAsList.get(0);
     }
 
