@@ -7,8 +7,18 @@ public class DaySixteen {
     }
 
     public Packet parsePacket(String binaryString) {
-        int versionNumber = Integer.parseInt(binaryString.substring(0,3),2);
-        Packet packet = new Packet(versionNumber);
-        return packet;
+        int versionNumber = Integer.parseInt(binaryString.substring(0, 3), 2);
+        int typeId = Integer.parseInt(binaryString.substring(3, 6), 2);
+        int count = 6;
+        String leadingBitValue = binaryString.substring(count, count + 1);
+        String value = "";
+        while (leadingBitValue.equals("1")) {
+            value += binaryString.substring(count+1, count + 5);
+            count += 5;
+            leadingBitValue = binaryString.substring(count, count + 1);
+        }
+        value += binaryString.substring(count+1, count + 5);
+
+        return new Packet(versionNumber, typeId, Integer.parseInt(value,2));
     }
 }

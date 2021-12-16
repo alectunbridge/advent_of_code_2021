@@ -19,6 +19,9 @@ public class DaySixteenTest {
         110100101111111000101000
         VVVTTTAAAAABBBBBCCCCC
          */
-        assertThat(daySixteen.parsePacket("110100101111111000101000").getVersionNumber()).isEqualTo(6);
+        Packet packet = daySixteen.parsePacket("110100101111111000101000");
+        assertThat(packet.getVersionNumber()).isEqualTo(6);
+        assertThat(packet.getTypeId()).isEqualTo(4);
+        assertThat(packet.getValue()).isEqualTo(2021);
     }
 }
