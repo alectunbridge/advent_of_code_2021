@@ -1,20 +1,14 @@
 package adventofcode2021;
 
-public class Packet {
-    private int value;
+public abstract class Packet {
     private int versionNumber;
     private int typeId;
-    private int subPacketLength;
+    private int length;
 
-    public Packet(int versionNumber, int typeId, int value) {
+    public Packet(int versionNumber, int typeId, int length) {
         this.versionNumber = versionNumber;
         this.typeId = typeId;
-        this.value = value;
-    }
-
-    public Packet(int versionNumber, int typeId, int value, int subPacketLength) {
-        this(versionNumber, typeId, value);
-        this.subPacketLength = subPacketLength;
+        this.length = length;
     }
 
     public int getVersionNumber() {
@@ -25,11 +19,7 @@ public class Packet {
         return typeId;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public int getSubPacketLength() {
-        return subPacketLength;
+    public int getLength() {
+        return length;
     }
 }
