@@ -31,19 +31,32 @@ public class DaySixteen {
             String lengthTypeId = binaryString.substring(count, count+1);
             count +=1;
             int subPacketLength = 0;
+            int subPacketNumber = 0;
+            List<Packet> subPacketList = new ArrayList<>();
+
             if (lengthTypeId.equals("0")) {
                 subPacketLength = Integer.parseInt(binaryString.substring(count, count + 15), 2);
                 count += 15;
+                int subPacketIndex = 0;
+                while(subPacketIndex < subPacketLength) {
+                    Packet subPacket = parsePacket(binaryString.substring(count+subPacketIndex));
+                    subPacketList.add(subPacket);
+                    subPacketIndex += subPacket.getLength();
+                }
+            } else {
+                subPacketNumber = Integer.parseInt(binaryString.substring(count, count + 11), 2);
+                count+= 11;
+                int subPacketCount = 0;
+                int subPacketIndex = 0;
+                while(subPacketCount < subPacketNumber) {
+                    Packet subPacket = parsePacket(binaryString.substring(count+subPacketIndex));
+                    subPacketList.add(subPacket);
+                    subPacketIndex += subPacket.getLength();
+                    subPacketCount++;
+                }
             }
-            //parse subpackets here
-            int subPacketIndex = 0;
-            List<Packet> subPacketList = new ArrayList<>();
-            while(subPacketIndex < subPacketLength) {
-                Packet subPacket = parsePacket(binaryString.substring(count+subPacketIndex));
-                subPacketList.add(subPacket);
-                subPacketIndex += subPacket.getLength();
-            }
-            result = new OperatorPacket(versionNumber, typeId, count+subPacketLength, subPacketLength, subPacketList);
+
+            result = new OperatorPacket(versionNumber, typeId, count+subPacketLength, subPacketLength, subPacketNumber, subPacketList);
         }
         return result;
     }
