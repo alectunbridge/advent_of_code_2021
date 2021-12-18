@@ -37,25 +37,19 @@ public class DaySixteen {
             if (lengthTypeId.equals("0")) {
                 subPacketLength = Integer.parseInt(binaryString.substring(count, count + 15), 2);
                 count += 15;
-                int subPacketIndex = 0;
-                while(subPacketIndex < subPacketLength) {
-                    Packet subPacket = parsePacket(binaryString.substring(count+subPacketIndex));
-                    subPacketList.add(subPacket);
-                    subPacketIndex += subPacket.getLength();
-                }
             } else {
                 subPacketNumber = Integer.parseInt(binaryString.substring(count, count + 11), 2);
                 count+= 11;
-                int subPacketCount = 0;
-                int subPacketIndex = 0;
-                while(subPacketCount < subPacketNumber) {
-                    Packet subPacket = parsePacket(binaryString.substring(count+subPacketIndex));
-                    subPacketList.add(subPacket);
-                    subPacketIndex += subPacket.getLength();
-                    subPacketCount++;
-                }
             }
 
+            int subPacketCount = 0;
+            int subPacketIndex = 0;
+            while(subPacketIndex < subPacketLength || subPacketCount < subPacketNumber)  {
+                Packet subPacket = parsePacket(binaryString.substring(count+subPacketIndex));
+                subPacketList.add(subPacket);
+                subPacketIndex += subPacket.getLength();
+                subPacketCount++;
+            }
             result = new OperatorPacket(versionNumber, typeId, count+subPacketLength, subPacketLength, subPacketNumber, subPacketList);
         }
         return result;
