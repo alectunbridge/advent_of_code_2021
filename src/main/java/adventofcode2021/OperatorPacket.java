@@ -12,6 +12,7 @@ public class OperatorPacket extends Packet {
         this.lengthOfSubPackets = subPacketLength;
         this.subPacketNumber = subPacketNumber;
         this.subPacketList = subPacketList;
+        System.out.println(this);
     }
 
     public int getLengthOfSubPackets() {
@@ -22,7 +23,16 @@ public class OperatorPacket extends Packet {
         return getVersionNumber() + subPacketList.stream().mapToInt(Packet::sumVersionNumbers).sum();
     }
 
-    public int getNumberOfSubPackests() {
+    public int getNumberOfSubPackets() {
         return subPacketNumber;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " OperatorPacket " +
+                "lengthOfSubPackets=" + lengthOfSubPackets +
+                ", subPacketNumber=" + subPacketNumber;
+    }
+
+
 }

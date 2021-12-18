@@ -1,6 +1,8 @@
 package adventofcode2021;
 
 public abstract class Packet {
+    private static int packetId = 0;
+
     private int versionNumber;
     private int typeId;
     private int length;
@@ -9,6 +11,7 @@ public abstract class Packet {
         this.versionNumber = versionNumber;
         this.typeId = typeId;
         this.length = length;
+        packetId++;
     }
 
     public int getVersionNumber() {
@@ -21,6 +24,15 @@ public abstract class Packet {
 
     public int getLength() {
         return length;
+    }
+
+    @Override
+    public String toString() {
+        return "Packet: " +
+                "id=" + packetId +
+                ", versionNumber=" + versionNumber +
+                ", typeId=" + typeId +
+                ", length=" + length;
     }
 
     abstract public int sumVersionNumbers();
