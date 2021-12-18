@@ -36,4 +36,6 @@ public abstract class Packet {
     }
 
     abstract public int sumVersionNumbers();
+
+    public abstract long getValue();
 }

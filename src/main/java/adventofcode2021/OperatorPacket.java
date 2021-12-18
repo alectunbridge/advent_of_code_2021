@@ -34,5 +34,25 @@ public class OperatorPacket extends Packet {
                 ", subPacketNumber=" + subPacketNumber;
     }
 
-
+    @Override
+    public long getValue() {
+        switch (getTypeId()) {
+            case 0:
+                return subPacketList.stream().mapToLong(Packet::getValue).sum();
+            case 1:
+                return subPacketList.stream().mapToLong(Packet::getValue).reduce(1, (a, b) -> a * b);
+            case 2:
+                return subPacketList.stream().mapToLong(Packet::getValue).min().getAsLong();
+            case 3:
+                return subPacketList.stream().mapToLong(Packet::getValue).max().getAsLong();
+            case 5:
+                return subPacketList.get(0).getValue() > subPacketList.get(1).getValue() ? 1 : 0;
+            case 6:
+                return subPacketList.get(0).getValue() < subPacketList.get(1).getValue() ? 1 : 0;
+            case 7:
+                return subPacketList.get(0).getValue() == subPacketList.get(1).getValue() ? 1 : 0;
+            default:
+                throw new IllegalArgumentException("Unknown typeId: " + getTypeId());
+        }
+    }
 }

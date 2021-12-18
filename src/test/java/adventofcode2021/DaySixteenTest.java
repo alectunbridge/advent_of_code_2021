@@ -89,10 +89,75 @@ public class DaySixteenTest {
     }
 
     @Test
-    void part1Solution() {
+    void part1AndPart2Solution() {
         String hexString = Utils.readInputLinesFromFile("day_sixteen.txt").get(0);
         String binaryString = DaySixteen.hexStringToBinary(hexString);
         OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
         assertThat(packet.sumVersionNumbers()).isEqualTo(940);
+        assertThat(packet.getValue()).isEqualTo(13476220616073L);
+    }
+
+    @Test
+    void part2Example1() {
+        String hexString = "C200B40A82";
+        String binaryString = DaySixteen.hexStringToBinary(hexString);
+        OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
+        assertThat(packet.getValue()).isEqualTo(3);
+    }
+
+    @Test
+    void part2Example2() {
+        String hexString = "04005AC33890";
+        String binaryString = DaySixteen.hexStringToBinary(hexString);
+        OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
+        assertThat(packet.getValue()).isEqualTo(54);
+    }
+
+    @Test
+    void part2Example3() {
+        String hexString = "880086C3E88112";
+        String binaryString = DaySixteen.hexStringToBinary(hexString);
+        OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
+        assertThat(packet.getValue()).isEqualTo(7);
+    }
+
+    @Test
+    void part2Example4() {
+        String hexString = "CE00C43D881120";
+        String binaryString = DaySixteen.hexStringToBinary(hexString);
+        OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
+        assertThat(packet.getValue()).isEqualTo(9);
+    }
+
+    @Test
+    void part2Example5() {
+        String hexString = "D8005AC2A8F0";
+        String binaryString = DaySixteen.hexStringToBinary(hexString);
+        OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
+        assertThat(packet.getValue()).isEqualTo(1);
+    }
+
+    @Test
+    void part2Example6() {
+        String hexString = "F600BC2D8F";
+        String binaryString = DaySixteen.hexStringToBinary(hexString);
+        OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
+        assertThat(packet.getValue()).isEqualTo(0);
+    }
+
+    @Test
+    void part2Example7() {
+        String hexString = "9C005AC2F8F0";
+        String binaryString = DaySixteen.hexStringToBinary(hexString);
+        OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
+        assertThat(packet.getValue()).isEqualTo(0);
+    }
+
+    @Test
+    void part2Example8() {
+        String hexString = "9C0141080250320F1802104A08";
+        String binaryString = DaySixteen.hexStringToBinary(hexString);
+        OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
+        assertThat(packet.getValue()).isEqualTo(1);
     }
 }

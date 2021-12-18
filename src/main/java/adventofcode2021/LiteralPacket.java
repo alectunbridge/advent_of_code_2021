@@ -12,6 +12,7 @@ public class LiteralPacket extends Packet {
         System.out.println(this);
     }
 
+    @Override
     public long getValue() {
         return value;
     }
