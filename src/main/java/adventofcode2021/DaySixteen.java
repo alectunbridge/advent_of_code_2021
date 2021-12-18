@@ -1,5 +1,9 @@
 package adventofcode2021;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 public class DaySixteen {
     public String hexStringToBinary(String input) {
         int intValue = Integer.parseInt(input, 16);
@@ -31,7 +35,15 @@ public class DaySixteen {
                 subPacketLength = Integer.parseInt(binaryString.substring(count, count + 15), 2);
                 count += 15;
             }
-            result = new OperatorPacket(versionNumber, typeId, count+subPacketLength, subPacketLength);
+            //parse subpackets here
+            int subPacketIndex = 0;
+            List<Packet> subPacketList = new ArrayList<>();
+            while(subPacketIndex < subPacketLength) {
+                Packet subPacket = parsePacket(binaryString.substring(count+subPacketIndex));
+                subPacketList.add(subPacket);
+                subPacketIndex += subPacket.getLength();
+            }
+            result = new OperatorPacket(versionNumber, typeId, count+subPacketLength, subPacketLength, subPacketList);
         }
         return result;
     }

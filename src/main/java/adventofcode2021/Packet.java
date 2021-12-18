@@ -22,4 +22,6 @@ public abstract class Packet {
     public int getLength() {
         return length;
     }
+
+    abstract public int sumVersionNumbers();
 }

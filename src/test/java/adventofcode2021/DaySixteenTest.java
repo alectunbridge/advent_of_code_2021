@@ -29,8 +29,8 @@ public class DaySixteenTest {
     @Test
     void parseOperatorPacket() {
         /*
-        00111000000000000110111101000101001010010001001000000000
-        VVVTTTILLLLLLLLLLLLLLLAAAAAAAAAAABBBBBBBBBBBBBBBB
+        001 110 0 000000000011011 110 10001010 010 10010001001000000000
+        VVV TTT I LLLLLLLLLLLLLLL AAA AAAAAAAA BBB BBBBBBBBBBBBB
          */
 
         OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket("00111000000000000110111101000101001010010001001000000000");
@@ -38,5 +38,6 @@ public class DaySixteenTest {
         assertThat(packet.getTypeId()).isEqualTo(6);
         assertThat(packet.getLengthOfSubPackets()).isEqualTo(27);
         assertThat(packet.getLength()).isEqualTo(49);
+        assertThat(packet.sumVersionNumbers()).isEqualTo(9);
     }
 }

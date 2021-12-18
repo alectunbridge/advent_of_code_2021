@@ -11,4 +11,9 @@ public class LiteralPacket extends Packet {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public int sumVersionNumbers() {
+        return getVersionNumber();
+    }
 }
