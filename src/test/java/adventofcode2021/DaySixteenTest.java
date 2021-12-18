@@ -92,8 +92,7 @@ public class DaySixteenTest {
     void part1Solution() {
         String hexString = Utils.readInputLinesFromFile("day_sixteen.txt").get(0);
         String binaryString = DaySixteen.hexStringToBinary(hexString);
-        //1110101010001100000
         OperatorPacket packet = (OperatorPacket) daySixteen.parsePacket(binaryString);
-        assertThat(packet.sumVersionNumbers()).isEqualTo(0);
+        assertThat(packet.sumVersionNumbers()).isEqualTo(940);
     }
 }
