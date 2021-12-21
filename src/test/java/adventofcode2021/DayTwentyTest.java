@@ -40,14 +40,72 @@ class DayTwentyTest {
         );
 
         assertThat(dayTwenty.getFloor()).isEqualTo(
-                "#..#.\n" +
+                        "#..#.\n" +
                         "#....\n" +
                         "##..#\n" +
                         "..#..\n" +
                         "..###\n"
         );
 
-        assertThat(dayTwenty.getIndex(0,0)).isEqualTo(18);//0b000_010_010);
+        assertThat(dayTwenty.getIndex(0,0)).isEqualTo(18);
+        assertThat(dayTwenty.getEnhancedCharacter(18)).isEqualTo('.');
 
     }
+
+    @Test
+    void takeAStep() {
+        DayTwenty dayTwenty = new DayTwenty(
+                List.of(
+                        "..#.#..#####.#.#.#.###.##.....###.##.#..###.####..#####..#....#..#..##..##" +
+                                "#..######.###...####..#..#####..##..#.#####...##.#.#..#.##..#.#......#.###" +
+                                ".######.###.####...#.##.##..#..#..#####.....#.#....###..#.##......#.....#." +
+                                ".#..#..##..#...##.######.####.####.#.#...#.......#..#.#.#...####.##.#....." +
+                                ".#..#...##.#.##..#...##.#.##..###.#......#.#.......#.#.#.####.###.##...#.." +
+                                "...####.#..#..#.##.#....##..#.####....##...##..#...#......#.#.......#....." +
+                                "..##..####..#...#.#.#...##..#.#..###..#####........#..####......#..#",
+                        "",
+                        "#..#.",
+                        "#....",
+                        "##..#",
+                        "..#..",
+                        "..###"
+                )
+        );
+
+        dayTwenty.step();
+
+        assertThat(dayTwenty.getFloor()).isEqualTo(
+                ".##.##.\n" +
+                "#..#.#.\n" +
+                "##.#..#\n" +
+                "####..#\n" +
+                ".#..##.\n" +
+                "..##..#\n" +
+                "...#.#.\n");
+
+        dayTwenty.step();
+
+        assertThat(dayTwenty.getFloor()).isEqualTo(
+                ".......#.\n" +
+                ".#..#.#..\n" +
+                "#.#...###\n" +
+                "#...##.#.\n" +
+                "#.....#.#\n" +
+                ".#.#####.\n" +
+                "..#.#####\n" +
+                "...##.##.\n" +
+                "....###..\n");
+
+        assertThat(dayTwenty.getPixelCount()).isEqualTo(35);
+    }
+
+    @Test
+    void partOneSolution() {
+        DayTwenty dayTwenty = new DayTwenty(Utils.readInputLinesFromFile("day_twenty.txt"));
+        dayTwenty.step();
+//        dayTwenty.step();
+        assertThat(dayTwenty.getPixelCount()).isLessThan(5426);
+    }
+
+
 }
