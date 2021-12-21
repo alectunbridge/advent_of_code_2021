@@ -6,6 +6,7 @@ public class DayTwenty {
 
     private final String enhancer;
     private char[][] floor;
+    private int stepCount = 0;
 
     public DayTwenty(List<String> input) {
         this.enhancer = input.get(0);
@@ -40,7 +41,11 @@ public class DayTwenty {
                         stringBuilder.append("1");
                     }
                 } catch (ArrayIndexOutOfBoundsException e){
-                    stringBuilder.append("0");
+                    if (stepCount % 2 == 0) {
+                        stringBuilder.append("0");
+                    } else {
+                        stringBuilder.append("1");
+                    }
                 }
             }
         }
@@ -59,6 +64,7 @@ public class DayTwenty {
             }
         }
         floor = newFloor;
+        stepCount++;
     }
 
     public int getPixelCount() {
