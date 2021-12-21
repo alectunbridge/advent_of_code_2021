@@ -3,6 +3,7 @@ package adventofcode2021;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -105,6 +106,13 @@ class DayTwentyTest {
         dayTwenty.step();
         dayTwenty.step();
         assertThat(dayTwenty.getPixelCount()).isLessThan(5426).isEqualTo(5259);
+    }
+
+    @Test
+    void partTwoSolution() {
+        DayTwenty dayTwenty = new DayTwenty(Utils.readInputLinesFromFile("day_twenty.txt"));
+        IntStream.range(0,50).forEach(i->dayTwenty.step());
+        assertThat(dayTwenty.getPixelCount()).isEqualTo(15287);
     }
 
     @Test
