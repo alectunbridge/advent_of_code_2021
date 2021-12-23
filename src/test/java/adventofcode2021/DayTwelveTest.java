@@ -3,10 +3,12 @@ package adventofcode2021;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DayTwelveTest {
+class DayTwelveTest {
 
     @Test
     void parse() {
@@ -20,7 +22,12 @@ public class DayTwelveTest {
                 "b-d",
                 "b-end"));
 
-        assertThat(dayTwelve.getEdges()).hasSize(-1);
-        // A -> [b,c,d]
+        Map<String,Set<String>> expectedEdges = Map.of(
+                "start", Set.of("A", "b"),
+                "A", Set.of("end","c", "b"),
+                "b", Set.of("d", "end", "A"),
+                "c", Set.of("A"),
+                "d", Set.of("b"));
+        assertThat(dayTwelve.getEdges()).containsExactlyInAnyOrderEntriesOf(expectedEdges);
     }
 }
