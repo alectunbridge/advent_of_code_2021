@@ -1,70 +1,52 @@
 package adventofcode2021;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 public class DayTwentyTwo {
 
-    private boolean[][][] cuboid;
-    private final List<DayTwentyTwoInstruction> instructions = new ArrayList<>();
-    private int absoluteMin = Integer.MAX_VALUE;
-    private int absoluteMax = Integer.MIN_VALUE;
+    private  List<DayTwentyTwoCuboid> cuboids = new ArrayList<>();
 
-    public DayTwentyTwo(List<String> instructions) {
-        cuboid = new boolean[101][101][101];
-        for (String instruction: instructions) {
-            String[] tokens = instruction.split(" ");
+    public DayTwentyTwo(List<String> input) {
+        for (String line: input) {
+            String[] tokens = line.split(" ");
             String onOrOff = tokens[0];
             String[] xyzCoordsWithDots = tokens[1].replace("x=", "")
                     .replace("y=", "")
                     .replace("z=", "")
                     .split(",");
 
-            int minX = Integer.parseInt(xyzCoordsWithDots[0].split("\\.\\.")[0]) + 50;
-            int maxX = Integer.parseInt(xyzCoordsWithDots[0].split("\\.\\.")[1]) + 50;
-            int minY = Integer.parseInt(xyzCoordsWithDots[1].split("\\.\\.")[0]) + 50;
-            int maxY = Integer.parseInt(xyzCoordsWithDots[1].split("\\.\\.")[1]) + 50;
-            int minZ = Integer.parseInt(xyzCoordsWithDots[2].split("\\.\\.")[0]) + 50;
-            int maxZ = Integer.parseInt(xyzCoordsWithDots[2].split("\\.\\.")[1]) + 50;
+            int minX = Integer.parseInt(xyzCoordsWithDots[0].split("\\.\\.")[0]);
+            int maxX = Integer.parseInt(xyzCoordsWithDots[0].split("\\.\\.")[1]);
+            int minY = Integer.parseInt(xyzCoordsWithDots[1].split("\\.\\.")[0]);
+            int maxY = Integer.parseInt(xyzCoordsWithDots[1].split("\\.\\.")[1]);
+            int minZ = Integer.parseInt(xyzCoordsWithDots[2].split("\\.\\.")[0]);
+            int maxZ = Integer.parseInt(xyzCoordsWithDots[2].split("\\.\\.")[1]);
 
-            int newMin = Integer.min(Integer.min(minX, minY), minZ);
-            if(absoluteMin > newMin){
-                absoluteMin = newMin;
-            }
-            int newMax = Integer.max(Integer.max(maxX,maxY),maxZ);
-            if(absoluteMax < newMax){
-                absoluteMax = newMax;
-            }
 
-            try {
-                boolean min = cuboid[minX][minY][minZ];
-                boolean max = cuboid[maxX][maxY][maxZ];
-                this.instructions.add(new DayTwentyTwoInstruction(onOrOff, minX, maxX, minY, maxY, minZ, maxZ));
-            } catch (ArrayIndexOutOfBoundsException e) {
-
+            DayTwentyTwoCuboid newCuboid = new DayTwentyTwoCuboid(onOrOff, minX, maxX, minY, maxY, minZ, maxZ);
+            List<DayTwentyTwoCuboid> newCuboids = new ArrayList<>();
+            for (DayTwentyTwoCuboid cuboid : cuboids) {
+                if (cuboid.intersects(newCuboid)) {
+                    newCuboids.add(cuboid.intersection(newCuboid));
+                }
             }
+            if(newCuboid.isOn()) {
+                cuboids.add(newCuboid);
+            }
+            cuboids.addAll(newCuboids);
         }
-        System.out.println(absoluteMin + " " + absoluteMax);
     }
 
     public long countLitCubes() {
-        long count = 0;
-
-        for (int x = 0; x < 101; x++) {
-            for (int y = 0; y < 101; y++) {
-                for (int z = 0; z < 101; z++) {
-                    if (cuboid[x][y][z]) {
-                        count++;
-                    }
-                }
-            }
+        long sum = 0L;
+        for (DayTwentyTwoCuboid cuboid : cuboids) {
+            long volume = cuboid.getVolume();
+            sum += volume;
         }
-        return count;
+        return sum;
     }
 
-    public void followInstructions() {
-        for (DayTwentyTwoInstruction instruction: instructions) {
-            cuboid = instruction.execute(cuboid);
-        }
-    }
 }

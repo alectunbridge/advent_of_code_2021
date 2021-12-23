@@ -159,5 +159,25 @@ class DayElevenTest {
 
         IntStream.range(0,90).forEach(i->dayEleven.step());
         assertThat(dayEleven.getFlashCount()).isEqualTo(1656);
+        IntStream.range(0,100).forEach(i->dayEleven.step());
+    }
+
+    @Test
+    void partOneSolution() {
+        DayEleven dayEleven = new DayEleven(List.of(
+                "6111821767",
+                "1763611615",
+                "3512683131",
+                "8582771473",
+                "8214813874",
+                "2325823217",
+                "2222482823",
+                "5471356782",
+                "3738671287",
+                "8675226574"
+        ));
+        IntStream.range(0,100).forEach(i->dayEleven.step());
+        assertThat(dayEleven.getFlashCount()).isEqualTo(1793);
+        IntStream.range(0,500).forEach(i->dayEleven.step());
     }
 }

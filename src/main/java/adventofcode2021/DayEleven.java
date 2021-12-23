@@ -1,12 +1,13 @@
 package adventofcode2021;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class DayEleven {
 
     private final int[][] board;
     private int flashCount;
+    private int flashCountAfterLastStep;
+    private int stepNumber;
 
     public DayEleven(List<String> input) {
         board= new int[input.size()][input.get(0).length()];
@@ -31,6 +32,7 @@ public class DayEleven {
     }
 
     public void step() {
+        stepNumber++;
         for (int row = 0; row < board.length; row++) {
             for( int column = 0; column < board[row].length; column++) {
                 board[row][column] += 1;
@@ -43,6 +45,10 @@ public class DayEleven {
                 }
             }
         }
+        if(flashCount-flashCountAfterLastStep == board.length*board.length) {
+            System.out.println("Synced after step: " + stepNumber);
+        }
+        flashCountAfterLastStep = flashCount;
     }
 
     private void flash(int row, int column) {
