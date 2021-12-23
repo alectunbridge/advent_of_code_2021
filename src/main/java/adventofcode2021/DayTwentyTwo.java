@@ -7,6 +7,8 @@ public class DayTwentyTwo {
 
     private boolean[][][] cuboid;
     private final List<DayTwentyTwoInstruction> instructions = new ArrayList<>();
+    private int absoluteMin = Integer.MAX_VALUE;
+    private int absoluteMax = Integer.MIN_VALUE;
 
     public DayTwentyTwo(List<String> instructions) {
         cuboid = new boolean[101][101][101];
@@ -25,6 +27,15 @@ public class DayTwentyTwo {
             int minZ = Integer.parseInt(xyzCoordsWithDots[2].split("\\.\\.")[0]) + 50;
             int maxZ = Integer.parseInt(xyzCoordsWithDots[2].split("\\.\\.")[1]) + 50;
 
+            int newMin = Integer.min(Integer.min(minX, minY), minZ);
+            if(absoluteMin > newMin){
+                absoluteMin = newMin;
+            }
+            int newMax = Integer.max(Integer.max(maxX,maxY),maxZ);
+            if(absoluteMax < newMax){
+                absoluteMax = newMax;
+            }
+
             try {
                 boolean min = cuboid[minX][minY][minZ];
                 boolean max = cuboid[maxX][maxY][maxZ];
@@ -33,10 +44,11 @@ public class DayTwentyTwo {
 
             }
         }
+        System.out.println(absoluteMin + " " + absoluteMax);
     }
 
-    public int countLitCubes() {
-        int count = 0;
+    public long countLitCubes() {
+        long count = 0;
 
         for (int x = 0; x < 101; x++) {
             for (int y = 0; y < 101; y++) {

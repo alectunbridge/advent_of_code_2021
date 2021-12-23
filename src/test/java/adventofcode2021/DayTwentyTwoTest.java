@@ -8,12 +8,12 @@ class DayTwentyTwoTest {
 
     @Test
     void name() {
-        DayTwentyTwo dayTwentyTwo = new DayTwentyTwo(Utils.readInputLinesFromFile("day_twentytwo.txt"));
+        DayTwentyTwo dayTwentyTwo = new DayTwentyTwo(Utils.readInputLinesFromFile("day_twenty_two_large_example.txt"));
 
         assertThat(dayTwentyTwo.countLitCubes()).isZero();
 
         dayTwentyTwo.followInstructions();
 
-        assertThat(dayTwentyTwo.countLitCubes()).isEqualTo(590784);
+        assertThat(dayTwentyTwo.countLitCubes()).isEqualTo(2758514936282235L);
     }
 }

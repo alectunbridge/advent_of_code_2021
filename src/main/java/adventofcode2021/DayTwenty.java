@@ -1,6 +1,9 @@
 package adventofcode2021;
 
+import java.nio.CharBuffer;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class DayTwenty {
 
@@ -32,16 +35,16 @@ public class DayTwenty {
 
     public int getIndex(int row, int column) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = row-1; i <= row+1 ; i++) {
-            for (int j = column-1; j <= column+1 ; j++) {
-                try{
-                    if(floor[i][j] == '.') {
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = column - 1; j <= column + 1; j++) {
+                try {
+                    if (floor[i][j] == '.') {
                         stringBuilder.append("0");
                     } else {
                         stringBuilder.append("1");
                     }
-                } catch (ArrayIndexOutOfBoundsException e){
-                    if (stepCount % 2 == 0) {
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    if (enhancer.charAt(0) == '.' || stepCount % 2 == 0) {
                         stringBuilder.append("0");
                     } else {
                         stringBuilder.append("1");
@@ -49,7 +52,7 @@ public class DayTwenty {
                 }
             }
         }
-        return Integer.parseInt(stringBuilder.toString(),2);
+        return Integer.parseInt(stringBuilder.toString(), 2);
     }
 
     public char getEnhancedCharacter(int index) {
@@ -57,10 +60,10 @@ public class DayTwenty {
     }
 
     public void step() {
-        char[][] newFloor = new char[floor.length+2][floor.length+2];
+        char[][] newFloor = new char[floor.length + 2][floor.length + 2];
         for (int row = -1; row <= floor.length; row++) {
             for (int column = -1; column <= floor.length; column++) {
-                newFloor[row+1][column+1] = getEnhancedCharacter(getIndex(row,column));
+                newFloor[row + 1][column + 1] = getEnhancedCharacter(getIndex(row, column));
             }
         }
         floor = newFloor;
@@ -71,7 +74,7 @@ public class DayTwenty {
         int count = 0;
         for (char[] row : floor) {
             for (char c : row) {
-                if(c=='#'){
+                if (c == '#') {
                     count++;
                 }
             }

@@ -128,6 +128,7 @@ class DayTwentyTest {
                 ".......",
                 "......."));
         dayTwenty.step();
+        System.out.println(dayTwenty.getFloor());
         dayTwenty.step();
         assertThat(dayTwenty.getFloor()).isEqualTo(
                         ".........\n" +
