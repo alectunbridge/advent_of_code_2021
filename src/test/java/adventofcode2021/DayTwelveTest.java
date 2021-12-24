@@ -56,4 +56,25 @@ class DayTwelveTest {
                 List.of("start", "b", "end")
         );
     }
+
+    @Test
+    void partOne(){
+            DayTwelve dayTwelve = new DayTwelve(Utils.readInputLinesFromFile("day_twelve.txt"));
+            assertThat(dayTwelve.findPaths()).hasSize(3497);
+    }
+
+    @Test
+    void partTwoSmallExample(){
+
+        DayTwelve dayTwelve = new DayTwelve(List.of(
+                "start-A",
+                "start-b",
+                "A-end",
+                "A-c",
+                "A-b",
+                "b-d",
+                "b-end"));
+
+                assertThat(dayTwelve.findPaths()).hasSize(36);
+    }
 }
