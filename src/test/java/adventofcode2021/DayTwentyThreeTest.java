@@ -63,13 +63,6 @@ class DayTwentyThreeTest {
 
         assertThat(dayTwentyThree.getAvailableMoves()).containsExactlyInAnyOrder(
                 //B moves
-                new int[]{3,0,0,0},
-                new int[]{3,0,1,0},
-                new int[]{3,0,5,0},
-                new int[]{3,0,7,0},
-                new int[]{3,0,9,0},
-                new int[]{3,0,10,0},
-
                 new int[]{2,1,0,0},
                 new int[]{2,1,1,0},
 

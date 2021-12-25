@@ -15,16 +15,21 @@ public class DayTwentyThree {
 
         for (int[] piece : getPiecesToMove()) {
             //if in hallway go to burrow
+            int pieceX = piece[1];
+            int pieceY = piece[2];
+            boolean pieceIsInHallway = pieceY == 0;
+            if(pieceIsInHallway) {
+                int burrowX = getBurrowXCoordinate(piece[0]);
+                continue;
+            }
             for (int x = 0; x < state[0].length(); x++) {
                 for (int y = 0; y < state.length; y++) {
                     boolean entrance = (x == 2 || x == 4 || x == 6 || x == 8) && y == 0;
-                    if (entrance || !isEmpty(x,y)) {
+                    if (entrance || !isEmpty(x,y) || x == pieceX) {
                         continue;
                     }
                     //check intervening locs
-                    int pieceX = piece[1];
-                    int pieceY = piece[2];
-                    if (pieceY <= 1 || isEmpty(pieceX, 1)) {
+                    if (pieceY == 1 || isEmpty(pieceX, 1)) {
                         //we're good to get to hallway
                         //are we good to move along it?
                         boolean blocked = false;
@@ -46,6 +51,21 @@ public class DayTwentyThree {
             }
         }
         return result;
+    }
+
+    private int getBurrowXCoordinate(int name) {
+        switch (name) {
+            case 'A':
+                return 2;
+            case 'B':
+                return 4;
+            case 'C':
+                return 6;
+            case 'D':
+                return 8;
+            default:
+                throw new IllegalArgumentException("Invalid piece name " + name);
+        }
     }
 
     public List<int[]> getPiecesToMove() {
