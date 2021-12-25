@@ -16,11 +16,26 @@ public class DayTwentyThree {
         for (int[] piece : getPiecesToMove()) {
             for (int x = 0; x < state[0].length(); x++) {
                 for (int y = 0; y < state.length; y++) {
+                    boolean entrance = x==2 || x == 4 || x==6 || x==8;
+                    if(entrance){
+                        continue;
+                    }
                     //check intervening locs
-                    if(piece[2] <= 1 || isEmpty(x,1)) {
+                    if (piece[2] <= 1 || isEmpty(piece[1], 1)) {
                         //we're good to get to hallway
                         //are we good to move along it?
-                        if (isAllowedLocation(x, y)) {
+                        boolean blocked = false;
+                        if(x!=piece[1]) { //we're changing x value
+                            int delta = (x - piece[1]) / Math.abs(x - piece[1]);
+                            for (int interX = piece[1] + delta; interX != x; interX += delta) {
+                                if (!isEmpty(interX, y)) {
+                                    blocked = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!blocked) {
                             result.add(new int[]{piece[1], piece[2], x, y});
                         }
                     }
@@ -43,12 +58,9 @@ public class DayTwentyThree {
         return result;
     }
 
-    private boolean isAllowedLocation(int x, int y) {
-        boolean entrance = x==2 || x == 4 || x==6 || x==8;
-        return !entrance && isEmpty(x, y);
-    }
+
 
     private boolean isEmpty(int x, int y) {
-        return state[y].charAt(x) == '.';
+        return state[y].charAt(x) == '.' || state[y].charAt(x) == '#';
     }
 }
