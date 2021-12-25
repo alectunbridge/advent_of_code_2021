@@ -67,6 +67,7 @@ class DayTwentyThreeTest {
                 new int[]{2,1,1,0},
 
                 //C moves
+                new int[]{4,1,6,1},
                 new int[]{4,1,5,0},
                 new int[]{4,1,7,0},
                 new int[]{4,1,9,0},

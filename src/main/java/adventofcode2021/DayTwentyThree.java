@@ -25,7 +25,7 @@ public class DayTwentyThree {
             for (int x = 0; x < state[0].length(); x++) {
                 for (int y = 0; y < state.length; y++) {
                     boolean entrance = (x == 2 || x == 4 || x == 6 || x == 8) && y == 0;
-                    if (entrance || !isEmpty(x,y) || x == pieceX) {
+                    if (entrance || !isEmpty(x,y) || x == pieceX || (y > 0 && getBurrowXCoordinate(piece[0]) != x)) {
                         continue;
                     }
                     //check intervening locs
@@ -36,7 +36,7 @@ public class DayTwentyThree {
                         if (x != pieceX) { //we're changing x value
                             int delta = (x - pieceX) / Math.abs(x - pieceX);
                             for (int interX = pieceX + delta; interX != x; interX += delta) {
-                                if (!isEmpty(interX, y)) {
+                                if (!isEmpty(interX, 0)) {
                                     blocked = true;
                                     break;
                                 }
