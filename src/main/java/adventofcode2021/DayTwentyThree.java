@@ -14,20 +14,23 @@ public class DayTwentyThree {
         List<int[]> result = new ArrayList<>();
 
         for (int[] piece : getPiecesToMove()) {
+            //if in hallway go to burrow
             for (int x = 0; x < state[0].length(); x++) {
                 for (int y = 0; y < state.length; y++) {
-                    boolean entrance = x==2 || x == 4 || x==6 || x==8;
-                    if(entrance){
+                    boolean entrance = (x == 2 || x == 4 || x == 6 || x == 8) && y == 0;
+                    if (entrance || !isEmpty(x,y)) {
                         continue;
                     }
                     //check intervening locs
-                    if (piece[2] <= 1 || isEmpty(piece[1], 1)) {
+                    int pieceX = piece[1];
+                    int pieceY = piece[2];
+                    if (pieceY <= 1 || isEmpty(pieceX, 1)) {
                         //we're good to get to hallway
                         //are we good to move along it?
                         boolean blocked = false;
-                        if(x!=piece[1]) { //we're changing x value
-                            int delta = (x - piece[1]) / Math.abs(x - piece[1]);
-                            for (int interX = piece[1] + delta; interX != x; interX += delta) {
+                        if (x != pieceX) { //we're changing x value
+                            int delta = (x - pieceX) / Math.abs(x - pieceX);
+                            for (int interX = pieceX + delta; interX != x; interX += delta) {
                                 if (!isEmpty(interX, y)) {
                                     blocked = true;
                                     break;
@@ -36,7 +39,7 @@ public class DayTwentyThree {
                         }
 
                         if (!blocked) {
-                            result.add(new int[]{piece[1], piece[2], x, y});
+                            result.add(new int[]{pieceX, pieceY, x, y});
                         }
                     }
                 }
@@ -50,8 +53,8 @@ public class DayTwentyThree {
         for (int x = 0; x < state[0].length(); x++) {
             for (int y = 0; y < state.length; y++) {
                 char character = state[y].charAt(x);
-                if(Character.isAlphabetic(character)){
-                    result.add(new int[]{character,x,y});
+                if (Character.isAlphabetic(character)) {
+                    result.add(new int[]{character, x, y});
                 }
             }
         }
@@ -59,8 +62,7 @@ public class DayTwentyThree {
     }
 
 
-
     private boolean isEmpty(int x, int y) {
-        return state[y].charAt(x) == '.' || state[y].charAt(x) == '#';
+        return state[y].charAt(x) == '.';
     }
 }

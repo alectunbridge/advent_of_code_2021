@@ -72,13 +72,8 @@ class DayTwentyThreeTest {
 
                 new int[]{2,1,0,0},
                 new int[]{2,1,1,0},
-                new int[]{2,1,5,0},
-                new int[]{2,1,7,0},
-                new int[]{2,1,9,0},
-                new int[]{2,1,10,0},
+
                 //C moves
-                new int[]{4,1,0,0},
-                new int[]{4,1,1,0},
                 new int[]{4,1,5,0},
                 new int[]{4,1,7,0},
                 new int[]{4,1,9,0},
@@ -90,8 +85,6 @@ class DayTwentyThreeTest {
                 new int[]{6,2,10,0},
 
                 //D moves
-                new int[]{8,1,0,0},
-                new int[]{8,1,1,0},
                 new int[]{8,1,5,0},
                 new int[]{8,1,7,0},
                 new int[]{8,1,9,0},
