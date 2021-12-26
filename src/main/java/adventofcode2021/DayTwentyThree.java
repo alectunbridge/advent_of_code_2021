@@ -20,6 +20,11 @@ public class DayTwentyThree {
             boolean pieceIsInHallway = pieceY == 0;
             if(pieceIsInHallway) {
                 int burrowX = getBurrowXCoordinate(piece[0]);
+                if(isEmpty(burrowX, 2)) {
+                    result.add(new int[]{piece[1], piece[2], burrowX, 2});
+                } else if(isEmpty(burrowX, 1) && state[2].charAt(burrowX) == piece[0]) {
+                    result.add(new int[]{piece[1], piece[2], burrowX, 1});
+                }
                 continue;
             }
             for (int x = 0; x < state[0].length(); x++) {
