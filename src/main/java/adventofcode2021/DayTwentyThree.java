@@ -73,12 +73,19 @@ public class DayTwentyThree {
         for (int x = 0; x < state[0].length(); x++) {
             for (int y = 0; y < state.length; y++) {
                 char character = state[y].charAt(x);
-                if (Character.isAlphabetic(character)) {
+                if (Character.isAlphabetic(character) && isNotInCorrectBurrow(character, x, y)) {
                     result.add(new int[]{character, x, y});
                 }
             }
         }
         return result;
+    }
+
+    //TODO this is broken
+    private boolean isNotInCorrectBurrow(char character, int x, int y) {
+        int burrowXCoordinate = getBurrowXCoordinate(character);
+        boolean canMoveIntoBurrow = (isEmpty(burrowXCoordinate, 1) && state[2].charAt(burrowXCoordinate) == character) || isEmpty(burrowXCoordinate, 2);
+        return burrowXCoordinate != x;
     }
 
 
