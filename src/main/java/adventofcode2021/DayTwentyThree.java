@@ -73,7 +73,7 @@ public class DayTwentyThree {
         for (int x = 0; x < state[0].length(); x++) {
             for (int y = 0; y < state.length; y++) {
                 char character = state[y].charAt(x);
-                if (Character.isAlphabetic(character) && isNotInCorrectBurrow(character, x, y)) {
+                if (Character.isAlphabetic(character) && !isSnugInBorrow(character, x, y)) {
                     result.add(new int[]{character, x, y});
                 }
             }
@@ -81,11 +81,9 @@ public class DayTwentyThree {
         return result;
     }
 
-    //TODO this is broken
-    private boolean isNotInCorrectBurrow(char character, int x, int y) {
+    private boolean isSnugInBorrow(char character, int x, int y) {
         int burrowXCoordinate = getBurrowXCoordinate(character);
-        boolean canMoveIntoBurrow = (isEmpty(burrowXCoordinate, 1) && state[2].charAt(burrowXCoordinate) == character) || isEmpty(burrowXCoordinate, 2);
-        return burrowXCoordinate != x;
+        return (x == burrowXCoordinate) && (y==2 || (y==1 && state[2].charAt(x) == character));
     }
 
 
