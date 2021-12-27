@@ -33,9 +33,9 @@ public class DayTwentyThree {
                 int burrowX = getBurrowXCoordinate(piece[0]);
                 if (isHallwayClear(pieceX, burrowX)) {
                     if (isEmpty(burrowX, 2)) {
-                        result.add(new int[]{piece[1], piece[2], burrowX, 2, piece[0]});
+                        result.add(new int[]{piece[1], piece[2], burrowX, 2});
                     } else if (isEmpty(burrowX, 1) && state[2].charAt(burrowX) == piece[0]) {
-                        result.add(new int[]{piece[1], piece[2], burrowX, 1, piece[0]});
+                        result.add(new int[]{piece[1], piece[2], burrowX, 1});
                     }
                 }
                 continue;
@@ -46,7 +46,7 @@ public class DayTwentyThree {
                         continue;
                     }
                     if (canGetToHallway(pieceX, pieceY) && isHallwayClear(pieceX, x)) {
-                        result.add(new int[]{pieceX, pieceY, x, y, piece[0]});
+                        result.add(new int[]{pieceX, pieceY, x, y});
                     }
                 }
             }
