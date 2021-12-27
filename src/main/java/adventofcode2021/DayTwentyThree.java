@@ -9,6 +9,8 @@ public class DayTwentyThree {
     private final String[] state;
     private int cost = 0;
 
+    private static int minimumCost = Integer.MAX_VALUE;
+
     public DayTwentyThree(String[] input) {
         this.state = input;
     }
@@ -173,5 +175,30 @@ public class DayTwentyThree {
         int result = Objects.hash(cost);
         result = 31 * result + Arrays.hashCode(state);
         return result;
+    }
+
+    public int findMiniumCostToSolve() {
+        List<int[]> availableMoves = getAvailableMoves();
+
+        if(cost > minimumCost){
+            return minimumCost;
+        }
+
+        if(isGameOver() && cost < minimumCost){
+            System.out.println(this);
+            minimumCost = cost;
+        }
+        for (int[] availableMove : availableMoves) {
+            makeMove(availableMove).findMiniumCostToSolve();
+        }
+        return minimumCost;
+    }
+
+    private boolean isGameOver() {
+        return getAvailableMoves().isEmpty() && state[0].equals("...........");
+    }
+
+    private DayTwentyThree makeMove(int[] availableMove) {
+        return makeMove(availableMove[0], availableMove[1], availableMove[2], availableMove[3]);
     }
 }

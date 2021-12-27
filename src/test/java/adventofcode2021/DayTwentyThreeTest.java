@@ -362,4 +362,17 @@ class DayTwentyThreeTest {
                 .makeMove(9, 0, 2, 1)
         ).isEqualTo(endState);
     }
+
+    @Test
+    void solvePartOneExample(){
+        DayTwentyThree dayTwentyThree = new DayTwentyThree(
+                new String[]{
+                       //01234567890
+                        "...........",//0
+                        "##B#C#B#D##",//1
+                        "##A#D#C#A##"}//2
+        );
+
+        assertThat(dayTwentyThree.findMiniumCostToSolve()).isEqualTo(12521);
+    }
 }
