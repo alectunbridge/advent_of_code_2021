@@ -1,13 +1,21 @@
 package adventofcode2021;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class DayTwentyThree {
     private final String[] state;
+    private int cost = 0;
 
     public DayTwentyThree(String[] input) {
         this.state = input;
+    }
+
+    public DayTwentyThree(String[] state, int costSoFar) {
+        this(state);
+        cost = costSoFar;
     }
 
     public List<int[]> getAvailableMoves() {
@@ -31,17 +39,24 @@ public class DayTwentyThree {
             }
             for (int x = 0; x < state[0].length(); x++) {
                 for (int y = 0; y < state.length; y++) {
-                    if (isEntrance(x, y) || !isEmpty(x, y) || x == pieceX || (y > 0 && getBurrowXCoordinate(piece[0]) != x)) {
+                    if (isEntrance(x, y) || !isEmpty(x, y) || x == pieceX || notMyBurrow(piece, x, y)) {
                         continue;
                     }
-                    boolean canGetToHallway = pieceY == 1 || isEmpty(pieceX, 1);
-                    if (canGetToHallway && isHallwayClear(pieceX, x)) {
+                    if (canGetToHallway(pieceX, pieceY) && isHallwayClear(pieceX, x)) {
                         result.add(new int[]{pieceX, pieceY, x, y});
                     }
                 }
             }
         }
         return result;
+    }
+
+    private boolean canGetToHallway(int pieceX, int pieceY) {
+        return pieceY == 1 || isEmpty(pieceX, 1);
+    }
+
+    private boolean notMyBurrow(int[] piece, int x, int y) {
+        return y > 0 && getBurrowXCoordinate(piece[0]) != x;
     }
 
     private boolean isEntrance(int x, int y) {
@@ -94,5 +109,69 @@ public class DayTwentyThree {
 
     private boolean isEmpty(int x, int y) {
         return state[y].charAt(x) == '.';
+    }
+
+    public int getMoveCost(char character, int[] move) {
+        int stepCost;
+        switch (character) {
+            case 'A':
+                stepCost = 1;
+                break;
+            case 'B':
+                stepCost = 10;
+                break;
+            case 'C':
+                stepCost = 100;
+                break;
+            case 'D':
+                stepCost = 1000;
+                break;
+            default:
+                throw new IllegalArgumentException("invalid amphipod name: " + character);
+        }
+
+        int ySteps = move[1] + move[3];
+        return (Math.abs(move[0] - move[2]) + ySteps) * stepCost;
+    }
+
+    public DayTwentyThree makeMove(int startX, int startY, int endX, int endY) {
+        String[] newState = new String[state.length];
+        String character = String.valueOf(state[startY].charAt(startX));
+        int moveCost = getMoveCost(character.charAt(0), new int[]{startX, startY, endX, endY});
+        for (int y = 0; y < state.length; y++) {
+            StringBuilder newRow = new StringBuilder(state[y]);
+            if (startY == y) {
+                newRow.replace(startX, startX + 1, ".");
+            }
+            if (endY == y) {
+                newRow.replace(endX, endX + 1, character);
+            }
+            newState[y] = newRow.toString();
+        }
+
+        return new DayTwentyThree(newState, cost + moveCost);
+    }
+
+    @Override
+    public String toString() {
+        return "DayTwentyThree{" +
+                "state=" + Arrays.toString(state) +
+                ", cost=" + cost +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DayTwentyThree that = (DayTwentyThree) o;
+        return cost == that.cost && Arrays.equals(state, that.state);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(cost);
+        result = 31 * result + Arrays.hashCode(state);
+        return result;
     }
 }
