@@ -1,5 +1,6 @@
 package adventofcode2021;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
@@ -10,7 +11,7 @@ class DayTwentyThreeTest {
     void availableMovesFromStartState() {
         DayTwentyThree dayTwentyThree = new DayTwentyThree(
                 new String[]{
-                        //01234567890
+                       //01234567890
                         "...........",//0
                         "##B#C#B#D##",//1
                         "##A#D#C#A##"}//2
@@ -373,6 +374,20 @@ class DayTwentyThreeTest {
                         "##A#D#C#A##"}//2
         );
 
-        assertThat(dayTwentyThree.findMiniumCostToSolve()).isEqualTo(12521);
+        assertThat(dayTwentyThree.findMinimumCostToSolve()).isEqualTo(12521);
+    }
+
+    @Test
+    @Disabled
+    void solvePartOne() {
+        DayTwentyThree dayTwentyThree = new DayTwentyThree(
+                new String[]{
+                        "...........",
+                        "##A#D#C#A##",
+                        "##C#D#B#B##"
+                }
+        );
+        assertThat(dayTwentyThree.findMinimumCostToSolve()).isEqualTo(15365);
+        System.out.println(DayTwentyThree.getMoveCount());
     }
 }

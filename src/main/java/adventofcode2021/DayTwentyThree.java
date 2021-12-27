@@ -1,15 +1,16 @@
 package adventofcode2021;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DayTwentyThree {
     private final String[] state;
     private int cost = 0;
 
     private static int minimumCost = Integer.MAX_VALUE;
+    private static int moveCount;
+    private static Map<String, Integer> cache = new HashMap<>();
 
     public DayTwentyThree(String[] input) {
         this.state = input;
@@ -32,9 +33,9 @@ public class DayTwentyThree {
                 int burrowX = getBurrowXCoordinate(piece[0]);
                 if (isHallwayClear(pieceX, burrowX)) {
                     if (isEmpty(burrowX, 2)) {
-                        result.add(new int[]{piece[1], piece[2], burrowX, 2});
+                        result.add(new int[]{piece[1], piece[2], burrowX, 2, piece[0]});
                     } else if (isEmpty(burrowX, 1) && state[2].charAt(burrowX) == piece[0]) {
-                        result.add(new int[]{piece[1], piece[2], burrowX, 1});
+                        result.add(new int[]{piece[1], piece[2], burrowX, 1, piece[0]});
                     }
                 }
                 continue;
@@ -45,11 +46,15 @@ public class DayTwentyThree {
                         continue;
                     }
                     if (canGetToHallway(pieceX, pieceY) && isHallwayClear(pieceX, x)) {
-                        result.add(new int[]{pieceX, pieceY, x, y});
+                        result.add(new int[]{pieceX, pieceY, x, y, piece[0]});
                     }
                 }
             }
         }
+//        List<int[]> burrowMoves = result.stream().filter(arr -> arr[3] > 0).collect(Collectors.toList());
+//        if(burrowMoves.size() > 0){
+//            result = burrowMoves;
+//        }
         return result;
     }
 
@@ -150,16 +155,18 @@ public class DayTwentyThree {
             }
             newState[y] = newRow.toString();
         }
-
+        moveCount++;
         return new DayTwentyThree(newState, cost + moveCost);
+    }
+
+    private DayTwentyThree makeMove(int[] availableMove) {
+        return makeMove(availableMove[0], availableMove[1], availableMove[2], availableMove[3]);
     }
 
     @Override
     public String toString() {
         return "DayTwentyThree{" +
-                "state=" + Arrays.toString(state) +
-                ", cost=" + cost +
-                '}';
+                "state=" + Arrays.toString(state);
     }
 
     @Override
@@ -177,28 +184,36 @@ public class DayTwentyThree {
         return result;
     }
 
-    public int findMiniumCostToSolve() {
-        List<int[]> availableMoves = getAvailableMoves();
-
+    public int findMinimumCostToSolve() {
         if(cost > minimumCost){
             return minimumCost;
         }
+        //if we've been here before at lower cost return
+        Integer costToGetHereBefore = cache.get(toString());
+        if(costToGetHereBefore != null && costToGetHereBefore < cost){
+            return minimumCost;
+        } else {
+            cache.put(toString(), cost);
+        }
 
-        if(isGameOver() && cost < minimumCost){
+        List<int[]> availableMoves = getAvailableMoves();
+
+        if(availableMoves.isEmpty() && isGameOver() && cost <= minimumCost){
             System.out.println(this);
             minimumCost = cost;
+            return minimumCost;
         }
         for (int[] availableMove : availableMoves) {
-            makeMove(availableMove).findMiniumCostToSolve();
+            makeMove(availableMove).findMinimumCostToSolve();
         }
         return minimumCost;
     }
 
     private boolean isGameOver() {
-        return getAvailableMoves().isEmpty() && state[0].equals("...........");
+        return state[0].equals("...........");
     }
 
-    private DayTwentyThree makeMove(int[] availableMove) {
-        return makeMove(availableMove[0], availableMove[1], availableMove[2], availableMove[3]);
+    public static int getMoveCount() {
+        return moveCount;
     }
 }
