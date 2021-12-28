@@ -2,13 +2,13 @@ package adventofcode2021;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DayTwentyThree {
     private int burrowDepth;
     private final String[] state;
     private int cost = 0;
 
-    private static int minimumCost = Integer.MAX_VALUE;
     private static int moveCount;
     private static Map<String, Integer> cache = new HashMap<>();
 
@@ -216,14 +216,18 @@ public class DayTwentyThree {
         return result;
     }
 
-    public int findMinimumCostToSolve() {
-        if(cost > minimumCost){
-            return minimumCost;
+    public int findMinimumCostToSolve(){
+        return findMinimumCostToSolve(Integer.MAX_VALUE);
+    }
+
+    private int findMinimumCostToSolve(int minimumCostSoFar) {
+        if(cost > minimumCostSoFar){
+            return minimumCostSoFar;
         }
         //if we've been here before at lower cost return
         Integer costToGetHereBefore = cache.get(toString());
         if(costToGetHereBefore != null && costToGetHereBefore <= cost){
-            return minimumCost;
+            return minimumCostSoFar;
         } else {
             cache.put(toString(), cost);
         }
@@ -232,15 +236,15 @@ public class DayTwentyThree {
 
         if(availableMoves.isEmpty() && isHallwayEmpty()){
             System.out.println(this + " " + cost);
-            if(cost < minimumCost) {
-                minimumCost = cost;
+            if(cost < minimumCostSoFar) {
+                minimumCostSoFar = cost;
             }
-            return minimumCost;
+            return minimumCostSoFar;
         }
         for (int[] availableMove : availableMoves) {
-            makeMove(availableMove).findMinimumCostToSolve();
+            minimumCostSoFar = makeMove(availableMove).findMinimumCostToSolve(minimumCostSoFar);
         }
-        return minimumCost;
+        return minimumCostSoFar;
     }
 
     private boolean isHallwayEmpty() {
