@@ -1,6 +1,5 @@
 package adventofcode2021;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
@@ -378,7 +377,6 @@ class DayTwentyThreeTest {
     }
 
     @Test
-    @Disabled
     void solvePartOne() {
         DayTwentyThree dayTwentyThree = new DayTwentyThree(
                 new String[]{
@@ -392,7 +390,6 @@ class DayTwentyThreeTest {
     }
 
     @Test
-    @Disabled
     void solvePartTwoExample() {
         DayTwentyThree dayTwentyThree = new DayTwentyThree(
                 new String[]{
@@ -410,11 +407,188 @@ class DayTwentyThreeTest {
     }
 
     @Test
-    @Disabled
+    void partTwoExampleTestLegalMoves1() {
+            DayTwentyThree dayTwentyThree = new DayTwentyThree(
+                    new String[]{
+                            //01234567890
+                            "...........",//0
+                            "##B#C#B#D##",//1
+                            "##D#C#B#A##",//2
+                            "##D#B#A#C##",//3
+                            "##A#D#C#A##"}//4
+            );
+
+            assertThat(dayTwentyThree.getAvailableMoves()).containsExactlyInAnyOrder(
+                    //B moves
+                    new int[]{2, 1, 0, 0},
+                    new int[]{2, 1, 1, 0},
+                    new int[]{2, 1, 3, 0},
+                    new int[]{2, 1, 5, 0},
+                    new int[]{2, 1, 7, 0},
+                    new int[]{2, 1, 9, 0},
+                    new int[]{2, 1, 10, 0},
+                    //C moves
+                    new int[]{4, 1, 0, 0},
+                    new int[]{4, 1, 1, 0},
+                    new int[]{4, 1, 3, 0},
+                    new int[]{4, 1, 5, 0},
+                    new int[]{4, 1, 7, 0},
+                    new int[]{4, 1, 9, 0},
+                    new int[]{4, 1, 10, 0},
+                    //B moves
+                    new int[]{6, 1, 0, 0},
+                    new int[]{6, 1, 1, 0},
+                    new int[]{6, 1, 3, 0},
+                    new int[]{6, 1, 5, 0},
+                    new int[]{6, 1, 7, 0},
+                    new int[]{6, 1, 9, 0},
+                    new int[]{6, 1, 10, 0},
+                    //D moves
+                    new int[]{8, 1, 0, 0},
+                    new int[]{8, 1, 1, 0},
+                    new int[]{8, 1, 3, 0},
+                    new int[]{8, 1, 5, 0},
+                    new int[]{8, 1, 7, 0},
+                    new int[]{8, 1, 9, 0},
+                    new int[]{8, 1, 10, 0}
+            );
+    }
+
+    @Test
+    void partTwoExampleTestLegalMoves2() {
+            DayTwentyThree dayTwentyThree = new DayTwentyThree(
+                    new String[]{
+                           //01234567890
+                            "..........D",//0
+                            "##B#C#B#.##",//1
+                            "##D#C#B#A##",//2
+                            "##D#B#A#C##",//3
+                            "##A#D#C#A##"}//4
+            );
+
+            assertThat(dayTwentyThree.getAvailableMoves()).containsExactlyInAnyOrder(
+                    //A moves
+                    new int[]{8, 2, 0, 0},
+                    new int[]{8, 2, 1, 0},
+                    new int[]{8, 2, 3, 0},
+                    new int[]{8, 2, 5, 0},
+                    new int[]{8, 2, 7, 0},
+                    new int[]{8, 2, 9, 0},
+                    //B moves
+                    new int[]{2, 1, 0, 0},
+                    new int[]{2, 1, 1, 0},
+                    new int[]{2, 1, 3, 0},
+                    new int[]{2, 1, 5, 0},
+                    new int[]{2, 1, 7, 0},
+                    new int[]{2, 1, 9, 0},
+                    //C moves
+                    new int[]{4, 1, 0, 0},
+                    new int[]{4, 1, 1, 0},
+                    new int[]{4, 1, 3, 0},
+                    new int[]{4, 1, 5, 0},
+                    new int[]{4, 1, 7, 0},
+                    new int[]{4, 1, 9, 0},
+                    //B moves
+                    new int[]{6, 1, 0, 0},
+                    new int[]{6, 1, 1, 0},
+                    new int[]{6, 1, 3, 0},
+                    new int[]{6, 1, 5, 0},
+                    new int[]{6, 1, 7, 0},
+                    new int[]{6, 1, 9, 0}
+                    //D moves
+
+            );
+    }
+
+    @Test
+    void partTwoExampleTestLegalMoves3() {
+            DayTwentyThree dayTwentyThree = new DayTwentyThree(
+                    new String[]{
+                           //01234567890
+                            "A.........D",//0
+                            "##B#C#B#.##",//1
+                            "##D#C#B#.##",//2
+                            "##D#B#A#C##",//3
+                            "##A#D#C#A##"}//4
+            );
+
+            assertThat(dayTwentyThree.getAvailableMoves()).containsExactlyInAnyOrder(
+                    //A moves
+
+                    //B moves
+                    new int[]{2, 1, 1, 0},
+                    new int[]{2, 1, 3, 0},
+                    new int[]{2, 1, 5, 0},
+                    new int[]{2, 1, 7, 0},
+                    new int[]{2, 1, 9, 0},
+                    //C moves
+                    new int[]{4, 1, 1, 0},
+                    new int[]{4, 1, 3, 0},
+                    new int[]{4, 1, 5, 0},
+                    new int[]{4, 1, 7, 0},
+                    new int[]{4, 1, 9, 0},
+                    //C moves
+                    new int[]{8,3, 1, 0},
+                    new int[]{8,3, 3, 0},
+                    new int[]{8,3, 5, 0},
+                    new int[]{8,3, 7, 0},
+                    new int[]{8,3, 9, 0},
+                    //B moves
+                    new int[]{6, 1, 1, 0},
+                    new int[]{6, 1, 3, 0},
+                    new int[]{6, 1, 5, 0},
+                    new int[]{6, 1, 7, 0},
+                    new int[]{6, 1, 9, 0}
+                    //D moves
+
+            );
+    }
+
+    @Test
+    void partTwoExampleTestLegalMoves4() {
+            DayTwentyThree dayTwentyThree = new DayTwentyThree(
+                    new String[]{
+                           //01234567890
+                            "A........BD",//0
+                            "##B#C#.#.##",//1
+                            "##D#C#B#.##",//2
+                            "##D#B#A#C##",//3
+                            "##A#D#C#A##"}//4
+            );
+
+            assertThat(dayTwentyThree.getAvailableMoves()).containsExactlyInAnyOrder(
+                    //A moves
+
+                    //B moves
+                    new int[]{2, 1, 1, 0},
+                    new int[]{2, 1, 3, 0},
+                    new int[]{2, 1, 5, 0},
+                    new int[]{2, 1, 7, 0},
+                    //C moves
+                    new int[]{4, 1, 1, 0},
+                    new int[]{4, 1, 3, 0},
+                    new int[]{4, 1, 5, 0},
+                    new int[]{4, 1, 7, 0},
+                    //C moves
+                    new int[]{8,3, 1, 0},
+                    new int[]{8,3, 3, 0},
+                    new int[]{8,3, 5, 0},
+                    new int[]{8,3, 7, 0},
+                    //B moves
+                    new int[]{6, 2, 1, 0},
+                    new int[]{6, 2, 3, 0},
+                    new int[]{6, 2, 5, 0},
+                    new int[]{6, 2, 7, 0}
+                    //D moves
+
+            );
+    }
+
+    @Test
     void solvePartTwo() {
         DayTwentyThree dayTwentyThree = new DayTwentyThree(
                 new String[]{
-                        //01234567890
+                       //01234567890
                         "...........",//0
                         "##A#D#C#A##",
                         "##D#C#B#A##",//2
@@ -423,7 +597,7 @@ class DayTwentyThreeTest {
         );
 
         int minimumCostToSolve = dayTwentyThree.findMinimumCostToSolve();
-        assertThat(minimumCostToSolve).isGreaterThan(47065);
+        assertThat(minimumCostToSolve).isEqualTo(52055);
         System.out.println(DayTwentyThree.getMoveCount());
     }
 }

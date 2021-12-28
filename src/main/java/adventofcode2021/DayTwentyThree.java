@@ -34,15 +34,7 @@ public class DayTwentyThree {
                 int burrowX = getBurrowXCoordinate(piece[0]);
                 if (isHallwayClear(pieceX, burrowX)) {
                     //if burrow is either empty or only full on same character fill first slot
-                    int firstEmptySlot = 0;
-                    for (int y = burrowDepth; y > 0; y--) {
-                        if(isEmpty(burrowX,y)){
-                            firstEmptySlot = y;
-                        }
-                        if(state[y].charAt(burrowX) != piece[0]){
-                           break;
-                        }
-                    }
+                    int firstEmptySlot = getFirstEmptyBurrowSlot(piece, burrowX);
                     if (firstEmptySlot>0) {
                         result.add(new int[]{piece[1], piece[2], burrowX, firstEmptySlot});
                     }
@@ -51,7 +43,7 @@ public class DayTwentyThree {
             }
             for (int x = 0; x < state[0].length(); x++) {
                 for (int y = 0; y < state.length; y++) {
-                    if (isEntrance(x, y) || !isEmpty(x, y) || x == pieceX || notMyBurrow(piece, x, y)) {
+                    if (isEntrance(x, y) || !isEmpty(x, y) || x == pieceX || notValidBurrow(piece, x, y)) {
                         continue;
                     }
                     if (canGetToHallway(pieceX, pieceY) && isHallwayClear(pieceX, x)) {
@@ -67,6 +59,19 @@ public class DayTwentyThree {
         return result;
     }
 
+    private int getFirstEmptyBurrowSlot(int[] piece, int burrowX) {
+        int firstEmptySlot = 0;
+        for (int y = burrowDepth; y > 0; y--) {
+            if(isEmpty(burrowX,y)){
+                firstEmptySlot = y;
+            }
+            if(state[y].charAt(burrowX) != piece[0]){
+               break;
+            }
+        }
+        return firstEmptySlot;
+    }
+
     private boolean canGetToHallway(int pieceX, int pieceY) {
         for(int y = pieceY-1; y>0; y--){
             if(!isEmpty(pieceX,y)){
@@ -76,8 +81,14 @@ public class DayTwentyThree {
         return true;
     }
 
-    private boolean notMyBurrow(int[] piece, int x, int y) {
-        return y > 0 && getBurrowXCoordinate(piece[0]) != x;
+    private boolean notValidBurrow(int[] piece, int x, int y) {
+        if(y > 0){
+            if(getBurrowXCoordinate(piece[0]) != x) {
+                return true;
+            }
+            return getFirstEmptyBurrowSlot(piece,x) == 0;
+        }
+        return false;
     }
 
     private boolean isEntrance(int x, int y) {
