@@ -86,7 +86,7 @@ class DayTwentyThreeTest {
     void availableMovesDisallowIncorrectBurrows() {
         DayTwentyThree dayTwentyThree = new DayTwentyThree(
                 new String[]{
-                        //01234567890
+                       //01234567890
                         "...B.......",//0
                         "##B#.#C#D##",//1
                         "##A#D#C#A##"}//2
@@ -207,7 +207,7 @@ class DayTwentyThreeTest {
     void test4() {
         DayTwentyThree dayTwentyThree = new DayTwentyThree(
                 new String[]{
-                        //01234567890
+                       //01234567890
                         ".....D.D.A.",//0
                         "##.#B#C#.##",//1
                         "##A#B#C#.##"}//2
@@ -388,6 +388,23 @@ class DayTwentyThreeTest {
                 }
         );
         assertThat(dayTwentyThree.findMinimumCostToSolve()).isEqualTo(15365);
+        System.out.println(DayTwentyThree.getMoveCount());
+    }
+
+    @Test
+    @Disabled
+    void solvePartTwoExample() {
+        DayTwentyThree dayTwentyThree = new DayTwentyThree(
+                new String[]{
+                        //01234567890
+                        "...........",//0
+                        "##B#C#B#D##",//1
+                        "##D#C#B#A##",//2
+                        "##D#B#A#C##",//3
+                        "##A#D#C#A##"}//4
+        );
+
+        assertThat(dayTwentyThree.findMinimumCostToSolve()).isEqualTo(44169);
         System.out.println(DayTwentyThree.getMoveCount());
     }
 }

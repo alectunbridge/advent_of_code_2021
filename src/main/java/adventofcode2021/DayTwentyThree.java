@@ -2,9 +2,9 @@ package adventofcode2021;
 
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DayTwentyThree {
+    private int burrowDepth;
     private final String[] state;
     private int cost = 0;
 
@@ -14,6 +14,7 @@ public class DayTwentyThree {
 
     public DayTwentyThree(String[] input) {
         this.state = input;
+        burrowDepth = state.length-1;
     }
 
     public DayTwentyThree(String[] state, int costSoFar) {
@@ -32,10 +33,18 @@ public class DayTwentyThree {
             if (pieceIsInHallway) {
                 int burrowX = getBurrowXCoordinate(piece[0]);
                 if (isHallwayClear(pieceX, burrowX)) {
-                    if (isEmpty(burrowX, 2)) {
-                        result.add(new int[]{piece[1], piece[2], burrowX, 2});
-                    } else if (isEmpty(burrowX, 1) && state[2].charAt(burrowX) == piece[0]) {
-                        result.add(new int[]{piece[1], piece[2], burrowX, 1});
+                    //if burrow is either empty or only full on same character fill first slot
+                    int firstEmptySlot = 0;
+                    for (int y = burrowDepth; y > 0; y--) {
+                        if(isEmpty(burrowX,y)){
+                            firstEmptySlot = y;
+                        }
+                        if(state[y].charAt(burrowX) != piece[0]){
+                           break;
+                        }
+                    }
+                    if (firstEmptySlot>0) {
+                        result.add(new int[]{piece[1], piece[2], burrowX, firstEmptySlot});
                     }
                 }
                 continue;
@@ -59,7 +68,12 @@ public class DayTwentyThree {
     }
 
     private boolean canGetToHallway(int pieceX, int pieceY) {
-        return pieceY == 1 || isEmpty(pieceX, 1);
+        for(int y = pieceY-1; y>0; y--){
+            if(!isEmpty(pieceX,y)){
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean notMyBurrow(int[] piece, int x, int y) {
@@ -110,7 +124,14 @@ public class DayTwentyThree {
 
     private boolean isSnugInBorrow(char character, int x, int y) {
         int burrowXCoordinate = getBurrowXCoordinate(character);
-        return (x == burrowXCoordinate) && (y == 2 || (y == 1 && state[2].charAt(x) == character));
+        boolean burrowGood = true;
+        for (int burrowIndex = burrowDepth; burrowIndex > 0 ; burrowIndex--) {
+            if(state[burrowIndex].charAt(x) != character && !isEmpty(x, burrowIndex)){
+                burrowGood = false;
+                break;
+            }
+        }
+        return x == burrowXCoordinate && burrowGood;
     }
 
 
@@ -198,9 +219,11 @@ public class DayTwentyThree {
 
         List<int[]> availableMoves = getAvailableMoves();
 
-        if(availableMoves.isEmpty() && isGameOver() && cost <= minimumCost){
+        if(availableMoves.isEmpty() && isHallwayEmpty()){
             System.out.println(this);
-            minimumCost = cost;
+            if(cost < minimumCost) {
+                minimumCost = cost;
+            }
             return minimumCost;
         }
         for (int[] availableMove : availableMoves) {
@@ -209,7 +232,7 @@ public class DayTwentyThree {
         return minimumCost;
     }
 
-    private boolean isGameOver() {
+    private boolean isHallwayEmpty() {
         return state[0].equals("...........");
     }
 
