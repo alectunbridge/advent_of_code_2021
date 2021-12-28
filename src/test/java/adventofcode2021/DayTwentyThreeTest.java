@@ -404,7 +404,26 @@ class DayTwentyThreeTest {
                         "##A#D#C#A##"}//4
         );
 
-        assertThat(dayTwentyThree.findMinimumCostToSolve()).isEqualTo(44169);
+        int minimumCostToSolve = dayTwentyThree.findMinimumCostToSolve();
+        assertThat(minimumCostToSolve).isEqualTo(44169);
+        System.out.println(DayTwentyThree.getMoveCount());
+    }
+
+    @Test
+    @Disabled
+    void solvePartTwo() {
+        DayTwentyThree dayTwentyThree = new DayTwentyThree(
+                new String[]{
+                        //01234567890
+                        "...........",//0
+                        "##A#D#C#A##",
+                        "##D#C#B#A##",//2
+                        "##D#B#A#C##",//3
+                        "##C#D#B#B##"}//4
+        );
+
+        int minimumCostToSolve = dayTwentyThree.findMinimumCostToSolve();
+        assertThat(minimumCostToSolve).isGreaterThan(47065);
         System.out.println(DayTwentyThree.getMoveCount());
     }
 }

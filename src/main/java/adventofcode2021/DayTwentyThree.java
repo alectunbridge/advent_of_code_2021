@@ -211,7 +211,7 @@ public class DayTwentyThree {
         }
         //if we've been here before at lower cost return
         Integer costToGetHereBefore = cache.get(toString());
-        if(costToGetHereBefore != null && costToGetHereBefore < cost){
+        if(costToGetHereBefore != null && costToGetHereBefore <= cost){
             return minimumCost;
         } else {
             cache.put(toString(), cost);
@@ -220,7 +220,7 @@ public class DayTwentyThree {
         List<int[]> availableMoves = getAvailableMoves();
 
         if(availableMoves.isEmpty() && isHallwayEmpty()){
-            System.out.println(this);
+            System.out.println(this + " " + cost);
             if(cost < minimumCost) {
                 minimumCost = cost;
             }
