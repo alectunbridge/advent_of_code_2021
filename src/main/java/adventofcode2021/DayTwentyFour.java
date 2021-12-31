@@ -16,8 +16,8 @@ class DayTwentyFourInstruction {
     }
 
     public void execute(DayTwentyFour alu) {
-        Integer register1Value = alu.getRegister(operand1);
-        Integer register2Value = alu.getRegister(operand2);
+        Long register1Value = alu.getRegister(operand1);
+        Long register2Value = alu.getRegister(operand2);
         switch (type) {
             case "inp":
                 alu.setRegister(operand1, alu.processArgument());
@@ -57,17 +57,29 @@ class DayTwentyFourInstruction {
 public class DayTwentyFour {
     private List<DayTwentyFourInstruction> instructions = new ArrayList<>();
     Deque<Integer> arguments = new ArrayDeque<>();
-    private Map<String, Integer> registers = new HashMap<>();
+    private Map<String, Long> registers = new HashMap<>();
 
     public DayTwentyFour(List<String> input) {
-        registers.put("w", 0);
-        registers.put("x", 0);
-        registers.put("y", 0);
-        registers.put("z", 0);
+        resetRegisters();
         for (String line : input) {
             String[] tokens = line.split(" ");
             instructions.add(new DayTwentyFourInstruction(tokens));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "DayTwentyFour{" +
+                "arguments=" + arguments +
+                ", registers=" + registers +
+                '}';
+    }
+
+    private void resetRegisters() {
+        registers.put("w", 0L);
+        registers.put("x", 0L);
+        registers.put("y", 0L);
+        registers.put("z", 0L);
     }
 
 
@@ -80,15 +92,20 @@ public class DayTwentyFour {
         return arguments.remove();
     }
 
-    public Integer getRegister(String registerName) {
-        Integer value = registers.get(registerName);
+    public Long getRegister(String registerName) {
+        Long value = registers.get(registerName);
         if (value == null && registerName != null) {
-            return Integer.parseInt(registerName);
+            return Long.parseLong(registerName);
         }
         return value;
     }
 
-    public void setRegister(String registerName, int value) {
+    public void setRegister(String registerName, long value) {
         registers.put(registerName, value);
+    }
+
+    public void reset() {
+        arguments.clear();
+        resetRegisters();
     }
 }
