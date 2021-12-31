@@ -1,5 +1,6 @@
 package adventofcode2021;
 
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -107,14 +108,8 @@ class DayTwentyFourTest {
             dayTwentyFour.reset();
 
             Integer[] digits = Arrays.stream(testNumberAsString.split("")).map(Integer::valueOf).collect(Collectors.toList()).toArray(new Integer[0]);
-            try {
-                dayTwentyFour.execute(digits);
-                assert dayTwentyFour.arguments.isEmpty();
-            } catch (IllegalArgumentException e){
-                System.out.println(dayTwentyFour);
-                continue;
-            }
-            if(dayTwentyFour.getRegister("z") == 0){
+
+            if(dayTwentyFour.skunkWerks(digits) == 0){
                 System.out.println(testNumber);
                 break;
             }
@@ -125,4 +120,18 @@ class DayTwentyFourTest {
             numbersTested++;
         }
     }
+
+    @Test
+    void toJava() {
+        DayTwentyFour dayTwentyFour = new DayTwentyFour(Utils.readInputLinesFromFile("day_twenty_four.txt"));
+        System.out.println(dayTwentyFour.translateToJava());
+    }
+
+    @Test
+    void skunkIt(){
+        DayTwentyFour dayTwentyFour = new DayTwentyFour(Lists.emptyList());
+        assertThat(dayTwentyFour.skunkWerks(1,3,5,7,9,2,4,6,8,9,9,9,9,9)).isEqualTo(0);
+
+    }
+
 }
