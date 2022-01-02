@@ -429,7 +429,7 @@ public class DayTwentyFour {
                 Long newZ = dayTwentyFour.getRegister("z");
                 String previousInputToGetToZ = result.get(newZ);
                 if(previousInputToGetToZ == null ||
-                        Long.parseLong(previousInputToGetToZ) < Long.parseLong(inputSoFar+currentDigit)) {
+                        Long.parseLong(previousInputToGetToZ) > Long.parseLong(inputSoFar+currentDigit)) {
                     result.put(newZ, inputSoFar + currentDigit);
                 }
             }

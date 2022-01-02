@@ -96,23 +96,6 @@ class DayTwentyFourTest {
 
     @Test
     void partOneBigExampleFirstTwoDigits() {
-        //a 15-23
-        //b  9-17
-        //c  6-14
-        //d  5-13
-        //e 11-19
-        //f 14-22
-        //g 17-25
-
-        //h  6-14
-        //i  7-15
-        //j 14-22
-        //k  7-15
-        //l  8-16
-        //m 14-22
-        //n  4-12
-
-//        DayTwentyFour dayTwentyFour = new DayTwentyFour(Utils.readInputLinesFromFile("day_twenty_four.txt"));
         DayTwentyFour dayTwentyFour = new DayTwentyFour(List.of(
                 "inp w",
                 "mul x 0",
@@ -151,7 +134,6 @@ class DayTwentyFourTest {
                 "mul y x",
                 "add z y"
         ));
-        int numbersTested = 0;
         for (long testNumber = 11L; testNumber <= 99L; testNumber++) {
             String testNumberAsString = Long.toString(testNumber);
             if (testNumberAsString.contains("0")) {
@@ -163,12 +145,6 @@ class DayTwentyFourTest {
 
             dayTwentyFour.execute(digits);
             System.out.println(dayTwentyFour.getRegister("z"));
-
-            if (numbersTested % 1_000_000 == 0) {
-//                System.out.println("" +testNumber + LocalDateTime.now());
-                numbersTested = 1;
-            }
-            numbersTested++;
         }
     }
 
@@ -180,7 +156,7 @@ class DayTwentyFourTest {
             inputZValues = DayTwentyFour.generateUniqueZValues(inputZValues, digitIndex);
             System.out.println(LocalDateTime.now() + " " + inputZValues.size() + " " + inputZValues.containsKey(0L));
         }
-        assertThat(Long.parseLong(inputZValues.get(0L))).isEqualTo(93499629698999L);
+        assertThat(Long.parseLong(inputZValues.get(0L))).isEqualTo(11164118121471L);
     }
 
     @Test
@@ -193,7 +169,6 @@ class DayTwentyFourTest {
     void skunkIt() {
         DayTwentyFour dayTwentyFour = new DayTwentyFour(Lists.emptyList());
         assertThat(dayTwentyFour.skunkWerks(1, 3, 5, 7, 9, 2, 4, 6, 8, 9, 9, 9, 9, 9)).isEqualTo(0);
-
     }
 
 }
