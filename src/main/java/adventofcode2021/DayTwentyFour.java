@@ -422,12 +422,16 @@ public class DayTwentyFour {
         DayTwentyFour dayTwentyFour = new DayTwentyFour(Utils.readInputLinesFromFile("day_twenty_four_" + (char) ('a' + digitIndex)));
         Map<Long,String> result = new HashMap<>();
         zValues.forEach( (oldZ,inputSoFar) -> {
-            for (int i = 1; i < 10; i++) {
+            for (int currentDigit = 1; currentDigit < 10; currentDigit++) {
                 dayTwentyFour.reset();
                 dayTwentyFour.setRegister("z", oldZ);
-                dayTwentyFour.execute(i);
+                dayTwentyFour.execute(currentDigit);
                 Long newZ = dayTwentyFour.getRegister("z");
-                result.put(newZ, inputSoFar+i);
+                String previousInputToGetToZ = result.get(newZ);
+                if(previousInputToGetToZ == null ||
+                        Long.parseLong(previousInputToGetToZ) < Long.parseLong(inputSoFar+currentDigit)) {
+                    result.put(newZ, inputSoFar + currentDigit);
+                }
             }
         });
         return result;

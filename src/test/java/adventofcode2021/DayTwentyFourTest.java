@@ -180,9 +180,7 @@ class DayTwentyFourTest {
             inputZValues = DayTwentyFour.generateUniqueZValues(inputZValues, digitIndex);
             System.out.println(LocalDateTime.now() + " " + inputZValues.size() + " " + inputZValues.containsKey(0L));
         }
-        System.out.println(inputZValues);
-        assertThat(Long.parseLong(inputZValues.get(0L))).isGreaterThan(93499629687999L);
-
+        assertThat(Long.parseLong(inputZValues.get(0L))).isEqualTo(93499629698999L);
     }
 
     @Test
