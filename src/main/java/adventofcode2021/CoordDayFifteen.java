@@ -1,6 +1,5 @@
 package adventofcode2021;
 
-import java.util.Objects;
 
 public class CoordDayFifteen extends Node {
     public final int x,y;
