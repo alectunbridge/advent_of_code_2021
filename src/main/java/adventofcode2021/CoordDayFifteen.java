@@ -2,40 +2,26 @@ package adventofcode2021;
 
 import java.util.Objects;
 
-public class CoordDayFifteen {
+public class CoordDayFifteen extends Node {
     public final int x,y;
+    public final int risk;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CoordDayFifteen that = (CoordDayFifteen) o;
-        return x == that.x && y == that.y;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
-    }
 
-    public CoordDayFifteen(int x, int y) {
+
+    public CoordDayFifteen(int x, int y, int risk) {
         this.x = x;
         this.y = y;
+        this.risk = risk;
+
     }
 
-    public CoordDayFifteen moveRight() {
-        return new CoordDayFifteen(x + 1, y);
-    }
 
-    public CoordDayFifteen moveDown() {
-        return new CoordDayFifteen(x,y+1);
-    }
-
-    public CoordDayFifteen moveLeft() {
-        return new CoordDayFifteen(x-1,y);
-    }
-
-    public CoordDayFifteen moveUp() {
-        return new CoordDayFifteen(x,y-1);
+    @Override
+    public String toString() {
+        return "CoordDayFifteen{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

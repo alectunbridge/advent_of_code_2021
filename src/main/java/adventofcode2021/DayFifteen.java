@@ -1,56 +1,119 @@
 package adventofcode2021;
 
 import java.util.*;
-import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class DayFifteen {
-    private final CoordDayFifteen END;
-    private final int[][] grid;
+    public static CoordDayFifteen[][] grid;
     public static int GRID_SIZE;
-    private Map<CoordDayFifteen, Integer> visitedPositions = new HashMap<>();
+    private CoordDayFifteen endNode;
+    private CoordDayFifteen startNode;
+
 
     public DayFifteen(String filename) {
         List<String> lines = Utils.readInputLinesFromFile(filename);
         GRID_SIZE = lines.size();
-        grid = new int[GRID_SIZE][GRID_SIZE];
-        for (int y = 0; y < grid.length; y++) {
-            grid[y] = Arrays.stream(lines.get(y).split("")).mapToInt(Integer::parseInt).toArray();
+        grid = new CoordDayFifteen[GRID_SIZE][GRID_SIZE];
+        for (int y = 0; y < GRID_SIZE; y++) {
+            for (int x = 0; x < GRID_SIZE; x++) {
+                int risk = Integer.parseInt(String.valueOf(lines.get(y).charAt(x)));
+                CoordDayFifteen node = new CoordDayFifteen(x, y, risk);
+                if (x == 0 && y == 0) {
+                    node.setDistance(0);
+                    startNode = node;
+                }
+                if (x == GRID_SIZE - 1 && y == GRID_SIZE - 1) {
+                    endNode = node;
+                }
+                grid[y][x] = node;
+            }
         }
-        END = new CoordDayFifteen(GRID_SIZE - 1, GRID_SIZE - 1);
+        for (int y = 0; y < GRID_SIZE; y++) {
+            for (int x = 0; x < GRID_SIZE; x++) {
+                int neighbourX = x+1;
+                int neighourY = y;
+                if(isValid(neighbourX,neighourY)){
+                    CoordDayFifteen neighbour = grid[neighourY][neighbourX];
+                    grid[y][x].addNeighbour(neighbour, neighbour.risk);
+                }
+
+                neighbourX = x;
+                neighourY = y+1;
+                if(isValid(neighbourX,neighourY)){
+                    CoordDayFifteen neighbour = grid[neighourY][neighbourX];
+                    grid[y][x].addNeighbour(neighbour, neighbour.risk);
+                }
+
+                neighbourX = x-1;
+                neighourY = y;
+                if(isValid(neighbourX,neighourY)){
+                    CoordDayFifteen neighbour = grid[neighourY][neighbourX];
+                    grid[y][x].addNeighbour(neighbour, neighbour.risk);
+                }
+
+                neighbourX = x;
+                neighourY = y-1;
+                if(isValid(neighbourX,neighourY)){
+                    CoordDayFifteen neighbour = grid[neighourY][neighbourX];
+                    grid[y][x].addNeighbour(neighbour, neighbour.risk);
+                }
+            }
+
+        }
     }
+
+
 
     public int solvePart1() {
-        int riskLevel = 0;
-        CoordDayFifteen currentPosition = new CoordDayFifteen(0, 0);
-        makeNextMove(riskLevel, currentPosition);
-        return visitedPositions.get(END);
-    }
+        Set<Node> graph = Arrays.stream(grid).flatMap(Arrays::stream).collect(Collectors.toSet());
+        findShortestPaths(graph, startNode);
+        for (Node node : graph) {
 
-    private void makeNextMove(int riskLevel, CoordDayFifteen pos) {
-        if (pos.equals(END)) {
-            return;
-        }
-        makeSingleMove(riskLevel, pos.moveRight());
-        makeSingleMove(riskLevel, pos.moveDown());
-        makeSingleMove(riskLevel, pos.moveLeft());
-        makeSingleMove(riskLevel, pos.moveUp());
-    }
-
-    private void makeSingleMove(int riskLevel, CoordDayFifteen newPosition) {
-        if (isValid(newPosition)) {
-            int newRiskLevel = riskLevel + grid[newPosition.y][newPosition.x];
-            if(visitedPositions.get(END) != null && visitedPositions.get(END) < newRiskLevel ){
-                return;
+            if (node.equals(endNode)) {
+                return node.getDistance();
             }
-            if (visitedPositions.get(newPosition) != null && visitedPositions.get(newPosition) < newRiskLevel) {
-                return;
-            }
-            visitedPositions.put(newPosition, newRiskLevel);
-            makeNextMove(newRiskLevel, newPosition);
         }
+        return Integer.MAX_VALUE;
     }
 
-    private boolean isValid(CoordDayFifteen position) {
-        return position.x >= 0 && position.x < DayFifteen.GRID_SIZE && position.y >= 0 && position.y < DayFifteen.GRID_SIZE;
+    private void findShortestPaths(Set<Node> graph, Node startNode) {
+        Set<Node> settledNodes = new HashSet<>();
+        Set<Node> unSettledNodes = new HashSet<>();
+        unSettledNodes.add(startNode);
+
+        while (!unSettledNodes.isEmpty()) {
+            Node currentNode = findClosestNode(unSettledNodes);
+            unSettledNodes.remove(currentNode);
+            for (Map.Entry<Node, Integer> edge : currentNode.getNeighbours().entrySet()) {
+                Node neighbour = edge.getKey();
+                Integer edgeLength = edge.getValue();
+                if (!settledNodes.contains(neighbour)) {
+                    int newDistance = currentNode.getDistance() + edgeLength;
+                    if (newDistance < neighbour.getDistance()) {
+                        neighbour.setDistance(newDistance);
+                        unSettledNodes.add(neighbour);
+                    }
+                }
+            }
+            settledNodes.add(currentNode);
+        }
+
+    }
+
+    private Node findClosestNode(Set<Node> nodes) {
+        Node lowestDistanceNode = null;
+        int lowestDistance = Integer.MAX_VALUE;
+        for (Node node: nodes) {
+            int nodeDistance = node.getDistance();
+            if (nodeDistance < lowestDistance) {
+                lowestDistance = nodeDistance;
+                lowestDistanceNode = node;
+            }
+        }
+        return lowestDistanceNode;
+    }
+
+    public static boolean isValid(int x, int y) {
+        return x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE;
     }
 }

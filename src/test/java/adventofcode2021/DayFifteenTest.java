@@ -16,6 +16,6 @@ public class DayFifteenTest {
     @Test
     void part1() {
         DayFifteen dayFifteen = new DayFifteen("day_fifteen.txt");
-        assertThat(dayFifteen.solvePart1()).isEqualTo(-1);
+        assertThat(dayFifteen.solvePart1()).isEqualTo(498);
     }
 }
