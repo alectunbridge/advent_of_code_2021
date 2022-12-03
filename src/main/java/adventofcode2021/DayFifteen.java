@@ -10,8 +10,8 @@ public class DayFifteen {
     private CoordDayFifteen startNode;
 
 
-    public DayFifteen(String filename) {
-        List<String> lines = Utils.readInputLinesFromFile(filename);
+    public DayFifteen(List<String> lines) {
+
         GRID_SIZE = lines.size();
         grid = new CoordDayFifteen[GRID_SIZE][GRID_SIZE];
         for (int y = 0; y < GRID_SIZE; y++) {
@@ -60,6 +60,12 @@ public class DayFifteen {
             }
 
         }
+    }
+
+
+
+    public DayFifteen(String filename) {
+        this(Utils.readInputLinesFromFile(filename));
     }
 
 
@@ -115,5 +121,36 @@ public class DayFifteen {
 
     public static boolean isValid(int x, int y) {
         return x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE;
+    }
+
+
+
+    public static int[][] expandGrid(int[][] grid, int factor) {
+        int[][] result = new int[grid.length*factor][grid.length*factor];
+
+
+        for (int y = 0; y < factor; y++) {
+            for (int x = 0; x < factor; x++) {
+                for(int row=0; row<grid.length;row++){
+                    for(int column=0; column<grid.length;column++){
+                        int newValue = incrementValue(grid[row][column],x+y);
+                        result[y*grid.length+row][x*grid.length+column] = newValue;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+
+
+    private static int incrementValue(int value, int addition) {
+        for (int count = 0; count < addition; count++) {
+            value++;
+            if(value==10){
+                value = 1;
+            }
+        }
+        return value;
     }
 }
