@@ -1,7 +1,6 @@
 package adventofcode2021;
 
 import java.util.List;
-import java.util.function.IntPredicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
