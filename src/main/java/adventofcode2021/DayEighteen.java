@@ -7,8 +7,9 @@ import java.util.regex.Pattern;
 import static java.lang.Integer.parseInt;
 
 public class DayEighteen {
-    public static final Pattern SIMPLE_PAIR_PATTERN = Pattern.compile("\\[(\\d+),(\\d+)](.*)");
-    public static final Pattern LEFT_STRING_PATTERN = Pattern.compile("(.*\\D)(\\d+)(\\D)*");
+    public static final Pattern SIMPLE_PAIR_PATTERN = Pattern.compile("\\[(?<number1>\\d+),(?<number2>\\d+)](?<postfix>.*)");
+    public static final Pattern LEFT_STRING_PATTERN = Pattern.compile("(?<prefix>.*\\D)(?<number>\\d+)(?<postfix>\\D)*");
+    public static final Pattern RIGHT_STRING_PATTERN = Pattern.compile("(?<prefix>\\D*)(?<number>\\d+)(?<postfix>.*)");
     private List<String> input;
 
     public DayEighteen(List<String> input) {
@@ -46,16 +47,15 @@ public class DayEighteen {
                     pairMatcher.matches();
                     Matcher leftStringMatcher = LEFT_STRING_PATTERN.matcher(leftString);
                     if(leftStringMatcher.matches()){
-                        int newNumber = parseInt(leftStringMatcher.group(2)) + parseInt(pairMatcher.group(1));
-                        leftString = leftStringMatcher.group(1)+newNumber+leftStringMatcher.group(3);
+                        int newNumber = parseInt(leftStringMatcher.group("number")) + parseInt(pairMatcher.group("number1"));
+                        leftString = leftStringMatcher.group("prefix")+newNumber+leftStringMatcher.group("postfix");
                     }
-                    Pattern rightStringPattern = Pattern.compile("(\\D*)(\\d+)(.*)");
-                    Matcher rightStringMatcher = rightStringPattern.matcher(pairMatcher.group(3));
+                    Matcher rightStringMatcher = RIGHT_STRING_PATTERN.matcher(pairMatcher.group("postfix"));
                     if(rightStringMatcher.matches()){
-                        int newNumber = parseInt(rightStringMatcher.group(2)) + parseInt(pairMatcher.group(2));
-                        rightString = rightStringMatcher.group(1) + newNumber + rightStringMatcher.group(3);
+                        int newNumber = parseInt(rightStringMatcher.group("number")) + parseInt(pairMatcher.group("number2"));
+                        rightString = rightStringMatcher.group("prefix") + newNumber + rightStringMatcher.group("postfix");
                     } else {
-                        rightString = pairMatcher.group(3);
+                        rightString = pairMatcher.group("postfix");
                     }
 
                     return leftString + 0 + rightString;
@@ -67,6 +67,6 @@ public class DayEighteen {
             }
 
         }
-        return null;
+        return number;
     }
 }
