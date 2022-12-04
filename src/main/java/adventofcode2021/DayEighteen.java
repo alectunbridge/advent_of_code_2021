@@ -1,6 +1,7 @@
 package adventofcode2021;
 
 import java.util.List;
+import java.util.function.IntPredicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +39,7 @@ public class DayEighteen {
                 continue;
             }
             String splitResult = split(result);
-            if(splitResult.equals(result)){
+            if (splitResult.equals(result)) {
                 break;
             } else {
                 result = splitResult;
@@ -95,5 +96,27 @@ public class DayEighteen {
 
         }
         return number;
+    }
+
+    public static int magnitude(String number) {
+        Pattern pattern = Pattern.compile("\\[(?<number1>\\d+),(?<number2>\\d+)]");
+
+        while (true) {
+            Matcher matcher = pattern.matcher(number);
+            StringBuffer sb = new StringBuffer();
+            while (matcher.find()) {
+                int i = 3 * parseInt(matcher.group("number1"));
+                int j = 2 * parseInt(matcher.group("number2"));
+                matcher.appendReplacement(sb, String.valueOf(i + j));
+            }
+            matcher.appendTail(sb);
+
+            String newResult = sb.toString();
+            if (!newResult.contains(",")) {
+                return parseInt(newResult);
+            } else {
+                number = newResult;
+            }
+        }
     }
 }
